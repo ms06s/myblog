@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+
+<html lang="zh-Hans">
+    <head>
+    <meta charset="utf-8">
+    <!--
+        hexo-theme-suka © SukkaW
+        GitHub: https://github.com/SukkaW/hexo-theme-suka
+    -->
+
+    <!-- ### Resource Hint ### -->
+
+    <!-- ## DNS Prefetch ## -->
+    <meta http-equiv="x-dns-prefetch-control" content="on">
+
+<!-- busuanzi -->
+
+
+<!-- comment -->
+
+
+
+
+
+
+
+<!-- analytics -->
+
+
+
+
+
+
+
+    <!-- ## Preload ## -->
+    
+
+
+
+
+    <!-- ### Meta & Title & Info ### -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, maximum-scale=5, viewport-fit=cover">
+    <meta name="renderer" content="webkit">
+
+    <!-- Title -->
+    <title>浅析MVC | ShinonomeLab</title>
+
+    <!-- Favicons -->
+    <link rel="icon" type="image&#x2F;ico" href="/img/favicon.ico"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="icon" typt="image&#x2F;png" sizes="192x192" href="/android-chrome-192x192.png"><link rel="icon" typt="image&#x2F;png" sizes="32x32" href="/img/favicon-32x32.png"><link rel="icon" typt="image&#x2F;png" sizes="16x16" href="/img/favicon-16x16.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="">
+
+    <!-- ### Import File ### -->
+    <link rel="stylesheet" href="/lib/spectre/spectre.min.css"><style>
+    body {
+        background-color: #f8f9fa;
+    }
+
+    a, a:visited {
+        color: #0070ff;
+    }
+
+    a:active, a:focus, a:hover {
+        color: #0070ff;
+        opacity: .75;
+    }
+
+    #post-content a,
+    #post-content a:hover,
+    #post-content a:focus,
+    #post-content a:visited {
+        color: #005eb9;
+        opacity: 1;
+    }
+
+    
+
+    .post-entry .card-body a {
+        color: #0070ff;
+    }
+
+    .avatar {
+        background: #444;
+    }
+
+    .navbar-link,
+    .navbar-link:visited,
+    .timeline .timeline-item .timeline-icon.icon-lg {
+        color: #0070ff;
+    }
+
+    .navbar-link:hover {
+        color: #0070ff;
+        opacity: .8;
+    }
+
+    #search-input .btn,
+    #disqus_click_btn,
+    #disqus-switch-to-direct,
+    #disqus-loadmore-button {
+        background: #727e96;
+        border-color: #727e96;
+        color: #fff;
+    }
+
+    #post-toc a.post-toc-link,
+    #post-toc a.post-toc-link:visited,
+    .share-menu.menu .menu-item>a {
+        color: #727e96;
+    }
+
+    .share-menu.menu .menu-item>a:hover,
+    .share-menu.menu .menu-item>a:focus,
+    .share-menu.menu .menu-item>a:visited {
+        color: #50596c;
+        background: #f8f9fa;
+        opacity: .85;
+    }
+</style><link rel="stylesheet" href="/css/style.min.css">
+
+
+
+
+
+
+
+
+    <!-- Prettify Theme -->
+    
+    <link rel="preload" href="/css/highlight/github.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="/css/highlight/github.min.css"></noscript>
+
+
+
+
+
+<script>
+/*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+!function(t){"use strict";t.loadCSS||(t.loadCSS=function(){});var e=loadCSS.relpreload={};if(e.support=function(){var e;try{e=t.document.createElement("link").relList.supports("preload")}catch(t){e=!1}return function(){return e}}(),e.bindMediaToggle=function(t){var e=t.media||"all";function a(){t.addEventListener?t.removeEventListener("load",a):t.attachEvent&&t.detachEvent("onload",a),t.setAttribute("onload",null),t.media=e}t.addEventListener?t.addEventListener("load",a):t.attachEvent&&t.attachEvent("onload",a),setTimeout(function(){t.rel="stylesheet",t.media="only x"}),setTimeout(a,3e3)},e.poly=function(){if(!e.support())for(var a=t.document.getElementsByTagName("link"),n=0;n<a.length;n++){var o=a[n];"preload"!==o.rel||"style"!==o.getAttribute("as")||o.getAttribute("data-loadcss")||(o.setAttribute("data-loadcss",!0),e.bindMediaToggle(o))}},!e.support()){e.poly();var a=t.setInterval(e.poly,500);t.addEventListener?t.addEventListener("load",function(){e.poly(),t.clearInterval(a)}):t.attachEvent&&t.attachEvent("onload",function(){e.poly(),t.clearInterval(a)})}"undefined"!=typeof exports?exports.loadCSS=loadCSS:t.loadCSS=loadCSS}("undefined"!=typeof global?global:this);
+</script>
+
+    <!-- ### Site Verification ### -->
+    
+
+
+    <meta name="mobile-web-app-capable" content="yes"><meta name="application-name" content="ShinonomeLab"><meta name="msapplication-starturl" content="http://yoursite.com"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="ShinonomeLab"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <!-- ### The Open Graph & Twitter Card Protocol ### -->
+    <meta property="og:title" content="浅析MVC | ShinonomeLab"><meta property="og:site_name" content="ShinonomeLab"><meta property="og:type" content="article"><meta property="og:url" content="http://yoursite.com/2020/05/17/%E6%B5%85%E6%9E%90%20MVC/"><meta property="og:locale" content="zh-Hans"><meta name="description" content="浅析 MVCMVC的三个对象MVC是三个字母的缩写，分别是Model（模型）、View（视图）和Controller（控制）这个模式认为不论程序简单或复杂，从结构上看，都可以分成这三类对象 Model: 数据模型123const m &#x3D; &amp;#123;  data: &amp;#123;&amp;#125;, &#x2F;&#x2F;数据获取，更新的一些操作&amp;#125; View: 视图12345const v &#x3D; &amp;#123;  e - 一堆热情 - ShinonomeLab"><meta name="keywords" content="mvc"><meta property="og:image" content="http://yoursite.com/2020/05/17/%E6%B5%85%E6%9E%90%20MVC/img/%E6%A8%A1%E5%9D%97%E5%8C%96.png"><meta property="og:image" content="http://yoursite.com/2020/05/17/%E6%B5%85%E6%9E%90%20MVC/img/MVC%20(2).png"><meta property="og:image" content="https://cdn.nlark.com/yuque/0/2020/png/822431/1596037795336-1ee394be-d20a-4e61-9c68-34264cb5f876.png"><meta property="og:image" content="https://cdn.nlark.com/yuque/0/2020/png/822431/1596038108951-dc7a6353-3f63-489c-a1f6-ff3ff6086cd1.png"><meta property="article:published_time" content="2020-05-16T16:00:00.000Z"><meta property="article:modified_time" content="2020-08-13T10:16:23.691Z"><meta property="og:updated_time" content="2020-08-13T10:16:23.691Z"><meta property="article:author" content="一堆热情"><meta property="article:tag" content="mvc"><meta name="twitter:card" content="summary">
+
+    
+
+    <!-- ### Canonical link ### -->
+    <link rel="canonical" href="http://yoursite.com/2020/05/17/%E6%B5%85%E6%9E%90%20MVC/">
+
+    <meta name="generator" content="Hexo 4.2.1">
+
+    <!-- ### Analytics ### -->
+    
+
+
+
+
+
+
+
+    <!-- ### Structured Data ### -->
+    
+
+
+
+<script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "url": "http://yoursite.com/2020/05/17/%E6%B5%85%E6%9E%90%20MVC/",
+    "@type": "BlogPosting",
+    "logo": "http://yoursite.com/android-chrome-192x192.png",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "http://yoursite.com/2020/05/17/%E6%B5%85%E6%9E%90%20MVC/"
+    },
+    "headline": "浅析MVC | ShinonomeLab",
+    
+    "image": {
+        "@type": "ImageObject",
+        "url": "http://yoursite.com/android-chrome-192x192.png"
+    },
+    
+    "datePublished": "2020-05-16T16:00:00.000Z",
+    "dateModified": "2020-08-13T10:16:23.691Z",
+    "author": {
+        "@type": "Person",
+        "name": "一堆热情",
+        "image": {
+            "@type": "ImageObject",
+            "url": "http://yoursite.com/img/avatar.png"
+        },
+        "description": "東雲研究所の今日も平和です"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "ShinonomeLab",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "http://yoursite.com/android-chrome-192x192.png"
+        }
+    },
+    
+    "potentialAction": {
+        "@type": "SearchAction",
+        "target": "http://yoursite.com/search?s={search_term_string}",
+        "query-input": "required name=search_term_string"
+    },
+    
+    "keywords": "mvc",
+    "description": "浅析 MVCMVC的三个对象MVC是三个字母的缩写，分别是Model（模型）、View（视图）和Controller（控制）这个模式认为不论程序简单或复杂，从结构上看，都可以分成这三类对象 Model: 数据模型123const m = &amp;amp;#123;  data: &amp;amp;#123;&amp;amp;#125;, //数据获取，更新的一些操作&amp;amp;#125; View: 视图12345const v = &amp;amp;#123;  e - 一堆热情 - ShinonomeLab"
+}
+</script>
+
+
+
+    <!-- ### Custom Head ### -->
+    
+</head>
+
+    <body>
+            
+
+            <!-- ### Main content ### -->
+            <!-- ## Header ##-->
+<header>
+    <h1 class="header-title text-center"><a href="/">ShinonomeLab</a></h1>
+
+    <p class="text-center header-slogan">
+        
+            
+                東雲研究所の今日も平和です
+            
+        
+    </p>
+
+    <nav class="navbar-section text-center">
+    
+        <a href="/" class="navbar-link">Home</a>
+    
+    
+        <a href="/archives/" class="navbar-link">Archives</a>
+    
+    
+    
+    
+        <div class="dropdown dropdown-right">
+    <a class="navbar-link dropdown-toggle" tabindex="0">Share</a>
+    <ul class="menu share-menu">
+
+        <!-- Share Weibo -->
+        
+        <li class="menu-item">
+            <a href="http://service.weibo.com/share/share.php?appkey=&title=ShinonomeLab&url=http://yoursite.com&pic=http://yoursite.com/android-chrome-192x192.png&searchPic=false&style=simple" target="_blank" rel="external noopener noreferrer nofollow">Share to Weibo</a>
+        </li>
+        
+
+        <!-- Share Twitter -->
+        
+
+        <!-- Share Facebook -->
+        
+
+        <!-- Share Google+ -->
+        
+        <li class="menu-item">
+            <a href="https://plus.google.com/share?url=http://yoursite.com" target="_blank" rel="external noopener noreferrer nofollow">Share to Google+</a>
+        </li>
+        
+
+        <!-- Share LinkedIn -->
+        
+
+        <!-- Share QQ -->
+        
+        <li class="menu-item">
+            <a href="http://connect.qq.com/widget/shareqq/index.html?site=ShinonomeLab&title=浅析MVC&summary=&pics=http://yoursite.com/android-chrome-192x192.png&url=http://yoursite.com" target="_blank" rel="external noopener noreferrer nofollow"> Share to QQ</a>
+        </li>
+        
+
+        <!-- Share Telegram -->
+        
+        <li class="menu-item">
+            <a href="https://t.me/share/url?url=http://yoursite.com&text=浅析MVC" target="_blank" rel="external noopener noreferrer nofollow">Share to Telegram</a>
+        </li>
+        
+
+        <!-- QRCode -->
+        
+
+    </ul>
+</div>
+    
+    
+</nav>
+</header>
+
+            
+    <!-- ## Post ## -->
+    <div class="post-container">
+    <div id="post-card" class="card">
+        
+        <div class="card-item-container">
+            <div class="card-inner-cell">
+                <!-- # Post Header Info # -->
+                <div class="card-header">
+                    
+    <h1 class="card-title h3 mb-2">浅析MVC</h1>
+
+
+
+
+<div class="post-header-info">
+    <p class="post-header-info-left text-gray">
+        <img class="author-thumb lazyload" data-src="/img/avatar.png" src="/img/suka-lazyload.gif" alt="一堆热情's Avatar">
+        <span>2020-05-17</span>
+        
+        
+        
+    </p>
+    <div class="post-header-info-right">
+        
+            <div class="dropdown dropdown-right">
+<a class="dropdown-toggle" tabindex="0">Share the post</a>
+<ul class="menu share-menu">
+    <!-- Share Weibo -->
+    
+    <li class="menu-item">
+        <a href="http://service.weibo.com/share/share.php?appkey=&title=浅析MVC&url=http://yoursite.com/2020/05/17/%E6%B5%85%E6%9E%90%20MVC/&pic=http://yoursite.com/android-chrome-192x192.png&searchPic=false&style=simple" target="_blank" rel="external noopener noreferrer nofollow">Share to Weibo</a>
+    </li>
+    
+
+    <!-- Share Twitter -->
+    
+
+    <!-- Share Facebook -->
+    
+
+    <!-- Share Google+ -->
+    
+    <li class="menu-item">
+        <a href="https://plus.google.com/share?url=http://yoursite.com/2020/05/17/%E6%B5%85%E6%9E%90%20MVC/" target="_blank" rel="external noopener noreferrer nofollow">Share to Google+</a>
+    </li>
+    
+
+    <!-- Share LinkedIn -->
+    
+
+    <!-- Share QQ -->
+    
+    <li class="menu-item">
+        <a href="http://connect.qq.com/widget/shareqq/index.html?site=ShinonomeLab&title=ShinonomeLab&summary=&pics=http://yoursite.com/android-chrome-192x192.png&url=http://yoursite.com/2020/05/17/%E6%B5%85%E6%9E%90%20MVC/" target="_blank" rel="external noopener noreferrer nofollow"> Share to QQ</a>
+    </li>
+    
+
+    <!-- Share Telegram -->
+    
+    <li class="menu-item">
+        <a href="https://t.me/share/url?url=http://yoursite.com/2020/05/17/%E6%B5%85%E6%9E%90%20MVC/&text=ShinonomeLab" target="_blank" rel="external noopener noreferrer nofollow">Share to Telegram</a>
+    </li>
+    
+
+    <!-- QRCode -->
+    
+
+</ul>
+</div>
+        
+    </div>
+</div>
+                </div>
+                <div class="card-body">
+                    
+                        
+                        
+                            <div id="post-toc"><ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#浅析-MVC"><span class="post-toc-number">1.</span> <span class="post-toc-text">浅析 MVC</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#MVC的三个对象"><span class="post-toc-number">2.</span> <span class="post-toc-text">MVC的三个对象</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Model-数据模型"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">Model: 数据模型</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#View-视图"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">View: 视图</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Controller-控制器"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">Controller: 控制器</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#表驱动编程"><span class="post-toc-number">3.</span> <span class="post-toc-text">表驱动编程</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#eventsBus"><span class="post-toc-number">4.</span> <span class="post-toc-text">eventsBus</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#模块化"><span class="post-toc-number">5.</span> <span class="post-toc-text">模块化</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#MVC，MVP和MVVM之间的区别"><span class="post-toc-number">6.</span> <span class="post-toc-text">MVC，MVP和MVVM之间的区别</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#MVC"><span class="post-toc-number">6.1.</span> <span class="post-toc-text">MVC</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#MVP"><span class="post-toc-number">6.2.</span> <span class="post-toc-text">MVP</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#MVVM"><span class="post-toc-number">6.3.</span> <span class="post-toc-text">MVVM</span></a></li></ol></li></ol></div>
+                        
+                    
+                    <article id="post-content">
+                        <h1 id="浅析-MVC"><a href="#浅析-MVC" class="headerlink" title="浅析 MVC"></a>浅析 MVC</h1><h1 id="MVC的三个对象"><a href="#MVC的三个对象" class="headerlink" title="MVC的三个对象"></a>MVC的三个对象</h1><p>MVC是三个字母的缩写，分别是Model（模型）、View（视图）和Controller（控制）<br>这个模式认为不论程序简单或复杂，从结构上看，都可以分成这三类对象</p>
+<h2 id="Model-数据模型"><a href="#Model-数据模型" class="headerlink" title="Model: 数据模型"></a>Model: 数据模型</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> m = &#123;</span><br><span class="line">  data: &#123;&#125;, <span class="comment">//数据获取，更新的一些操作</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="View-视图"><a href="#View-视图" class="headerlink" title="View: 视图"></a>View: 视图</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> v = &#123;</span><br><span class="line">  el: <span class="string">''</span>, <span class="comment">//挂载元素</span></span><br><span class="line">  html: <span class="string">'&#123;&#123;用m.data来替换&#125;&#125;'</span>, <span class="comment">//模板</span></span><br><span class="line">  render() &#123;&#125;, <span class="comment">//渲染，更新后渲染</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Controller-控制器"><a href="#Controller-控制器" class="headerlink" title="Controller: 控制器"></a>Controller: 控制器</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> c = &#123;</span><br><span class="line">  events: &#123;</span><br><span class="line">    <span class="string">'事件名 元素名'</span>: <span class="string">'add'</span>,</span><br><span class="line">    <span class="string">'事件名 元素名'</span>: <span class="string">'delete'</span>,</span><br><span class="line">    <span class="string">'事件名 元素名'</span>: <span class="string">'update'</span>,</span><br><span class="line">    <span class="string">'事件名 元素名'</span>: <span class="string">'get'</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  add() &#123;<span class="string">"按需求实现"</span>&#125;,</span><br><span class="line">  autoEventsBind: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> key <span class="keyword">in</span> events) &#123;</span><br><span class="line">      ;(<span class="string">'读取events结构，遍历添加事件'</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>大概过程就是通过m拿到数据，然后在c进行加工，最后通过v来渲染</p>
+<h1 id="表驱动编程"><a href="#表驱动编程" class="headerlink" title="表驱动编程"></a>表驱动编程</h1><p>Table-Driven Approach<br>表驱动法是一种编程模式，从表里面查找信息而不是使用逻辑语句（if…else…switch），当是很简单的情况时，用逻辑语句很简单，但如果逻辑很复杂，再使用逻辑语句就很麻烦了。<br>c对象中的根据events 表 autoEventsBing 来自动绑定事件就是一个例子<br>还有：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> table = &#123;</span><br><span class="line">  A: &#123;</span><br><span class="line">    data: <span class="string">"数据1"</span>,</span><br><span class="line">    action: <span class="string">"行为1"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  B: &#123;</span><br><span class="line">    data: <span class="string">"数据2"</span>,</span><br><span class="line">    action: <span class="string">"行为2"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">handleTable</span>(<span class="params">key</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> table[key]</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(handleTable(<span class="string">'A'</span>).data)</span><br></pre></td></tr></table></figure>
+<p>主要有以下四种优点</p>
+<ul>
+<li>逻辑与数据分离</li>
+<li>逻辑修改成本巨大，数据修改成本极小</li>
+<li>逻辑修改风险巨大，数据修改风险极小</li>
+<li>数据来源灵活，数据改变灵活</li>
+</ul>
+<h1 id="eventsBus"><a href="#eventsBus" class="headerlink" title="eventsBus"></a>eventsBus</h1><p>EventBus是一种设计模式或框架，主要用于组件/对象间通信的优化简化<br>EventBus 作为m，v，c 的父类，实现了mvc之间的通信</p>
+<h1 id="模块化"><a href="#模块化" class="headerlink" title="模块化"></a>模块化</h1><p><img src="img/%E6%A8%A1%E5%9D%97%E5%8C%96.png"><br>mvc将底层的一团乱麻分为各不依赖，互不干扰的模块<br>方便模块间组合，分离，单个模块功能调试升级<br>降低各个功能模块间的耦合度</p>
+<h1 id="MVC，MVP和MVVM之间的区别"><a href="#MVC，MVP和MVVM之间的区别" class="headerlink" title="MVC，MVP和MVVM之间的区别"></a>MVC，MVP和MVVM之间的区别</h1><h2 id="MVC"><a href="#MVC" class="headerlink" title="MVC"></a>MVC</h2><p>MVC模式的意思是，软件可以分成三个部分</p>
+<ol>
+<li>视图（view）：用户界面</li>
+<li>控制器（Controller）：业务逻辑</li>
+<li>模型（Model）：数据保存</li>
+</ol>
+<p><img src="img/MVC%20(2).png"><br>通信模式如下</p>
+<ol>
+<li>View 传送指令到 Controller</li>
+<li>Controller 完成业务逻辑后，要求 Model 改变状态</li>
+<li>Model 将新的数据发送到 View ，用户得到反馈</li>
+</ol>
+<p>所用通信都是单向的</p>
+<h2 id="MVP"><a href="#MVP" class="headerlink" title="MVP"></a>MVP</h2><p>MVP 模式将 Controller 改名为 Presenter ，同时改变了通信方向<br><img src="https://cdn.nlark.com/yuque/0/2020/png/822431/1596037795336-1ee394be-d20a-4e61-9c68-34264cb5f876.png"></p>
+<ol>
+<li>各部分之间的通信，都是双向的</li>
+<li>View 与 Model 不发生联系，都通过 Presenter 传递</li>
+<li>View 非常薄，不部署任何业务逻辑，成为”被动视图” （Passive View），即没有任何主动性，而 Presenter 非常厚，所有逻辑都部署在那里</li>
+</ol>
+<h2 id="MVVM"><a href="#MVVM" class="headerlink" title="MVVM"></a>MVVM</h2><p>MVVM 模式将 Presenter 改名为 ViewModel ，基本与MVP模式完全一致<br><img src="https://cdn.nlark.com/yuque/0/2020/png/822431/1596038108951-dc7a6353-3f63-489c-a1f6-ff3ff6086cd1.png"><br>唯一的区别是，它采用双向绑定（data-binding）：View的变动，自动反映在 ViewModel ，反之亦然。<br>Angular 在采用这种模式</p>
+
+                    </article>
+                    
+
+
+    <blockquote id="date-expire-notification" class="post-expired-notify">This article was last updated on <span id="date-expire-num"></span> days ago, and the information described in the article may have changed.</blockquote>
+    <script>
+    (function() {
+        var dateUpdate = Date.parse("2020-08-13");
+        var nowDate = new Date();
+        var a = nowDate.getTime();
+        var b = a - dateUpdate;
+        var daysUpdateExpire = Math.floor(b/(24*3600*1000));
+        if (daysUpdateExpire >= 120) {
+            document.getElementById('date-expire-num').innerHTML = daysUpdateExpire;
+        } else {
+            document.getElementById('date-expire-notification').style.display = 'none';
+        }
+    })();
+    </script>
+
+
+<p class="post-footer-info mb-0 pt-0">Published at&nbsp;<time datetime="2020-05-16T16:00:00.000Z" itemprop="datePublished">2020-05-17</time>
+
+    , Updated at&nbsp;<time datetime="2020-08-13T10:16:23.691Z" itemprop="dateModified">2020-08-13</time>
+
+</p>
+<p class="post-footer-info mb-0 pt-2">
+
+
+
+<span class="post-tags-list mt-2">
+
+<a class="post-tags-list-item" href="/tags/mvc/" rel="tag">#&nbsp;mvc</a>
+
+</span>
+
+
+</p>
+
+                </div>
+                <div class="post-nav px-2 bg-gray">
+<ul class="pagination">
+    <!-- Prev Nav -->
+    
+        <li class="page-item page-prev">
+            <a href="/2020/05/21/VUE%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%9E%84%E5%BB%BA%E7%89%88%E6%9C%AC%E7%9A%84%E5%8C%BA%E5%88%AB/" rel="prev">
+                <div class="page-item-title"><i class="icon icon-back" aria-hidden="true"></i></div>
+                <div class="page-item-subtitle">VUE的两种构建版本的区别</div>
+            </a>
+        </li>
+    
+
+    <!-- Next Nav -->
+    
+        <li class="page-item page-next">
+            <a href="/2019/08/20/DOM%E4%BA%8B%E4%BB%B6%E6%9C%BA%E5%88%B6/" rel="next">
+                <div class="page-item-title"><i class="icon icon-forward" aria-hidden="true"></i></div>
+                <div class="page-item-subtitle">DOM事件机制</div>
+            </a>
+        </li>
+    
+</ul>
+</div>
+
+                
+                    <!-- # Comment # -->
+                    
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+            <!-- ### Footer ### -->
+            <footer class="text-center">
+    <!-- footer copyright -->
+    
+        <p class="footer-copyright mb-0">Copyright&nbsp;©&nbsp;<span id="copyright-year"></span>
+            <a class="footer-copyright-a" href="http://yoursite.com">ShinonomeLab</a>
+        </p>
+
+    <!-- footer custom text -->
+    <p class="footer-text mb-0">
+    
+    </p>
+    <!-- footer develop info -->
+    <p class="footer-develop mb-0">
+        
+
+        
+        Powered by&nbsp;<!--
+         --><a href="https://hexo.io" target="_blank" class="footer-develop-a" rel="external nofollow noopener noreferrer">Hexo</a><span class="footer-develop-divider"></span>Theme&nbsp;-&nbsp;<!--
+         --><a href="https://github.com/SukkaW/hexo-theme-suka" target="_blank" class="footer-develop-a" rel="external noopener">Suka</a>
+    </p>
+</footer>
+
+
+        <!-- ### Import File ### -->
+        <!-- ### Footer JS Import ### -->
+
+<script>
+
+    
+window.lazyLoadOptions = {
+    elements_selector: ".lazyload",
+    threshold: 50
+};
+
+(function() {
+    var copyrightNow = new Date().getFullYear();
+    var copyrightContent = document.getElementById('copyright-year');
+    var copyrightSince = 2019;
+    if (copyrightSince === copyrightNow) {
+        copyrightContent.textContent = copyrightNow;
+    } else {
+        copyrightContent.textContent = copyrightSince + ' - ' + copyrightNow;
+    }
+})();
+console.log('\n %c Suka Theme (hexo-theme-suka) | © SukkaW | Verision 1.3.3 %c https://github.com/SukkaW/hexo-theme-suka \n', 'color: #fff; background: #444; padding:5px 0;', 'background: #bbb; padding:5px 0;');
+
+</script>
+
+<script src="/lib/vanilla-lazyload/lazyload.min.js" async></script>
+
+
+
+<!-- Comment -->
+
+
+<!-- ### Custom Footer ### -->
+
+    </body>
+
+</html>

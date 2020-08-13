@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+
+<html lang="zh-Hans">
+    <head>
+    <meta charset="utf-8">
+    <!--
+        hexo-theme-suka © SukkaW
+        GitHub: https://github.com/SukkaW/hexo-theme-suka
+    -->
+
+    <!-- ### Resource Hint ### -->
+
+    <!-- ## DNS Prefetch ## -->
+    <meta http-equiv="x-dns-prefetch-control" content="on">
+
+<!-- busuanzi -->
+
+
+<!-- comment -->
+
+
+
+
+
+
+
+<!-- analytics -->
+
+
+
+
+
+
+
+    <!-- ## Preload ## -->
+    
+
+
+
+
+    <!-- ### Meta & Title & Info ### -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, maximum-scale=5, viewport-fit=cover">
+    <meta name="renderer" content="webkit">
+
+    <!-- Title -->
+    <title>curl指令与http请求响应 | ShinonomeLab</title>
+
+    <!-- Favicons -->
+    <link rel="icon" type="image&#x2F;ico" href="/img/favicon.ico"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="icon" typt="image&#x2F;png" sizes="192x192" href="/android-chrome-192x192.png"><link rel="icon" typt="image&#x2F;png" sizes="32x32" href="/img/favicon-32x32.png"><link rel="icon" typt="image&#x2F;png" sizes="16x16" href="/img/favicon-16x16.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="">
+
+    <!-- ### Import File ### -->
+    <link rel="stylesheet" href="/lib/spectre/spectre.min.css"><style>
+    body {
+        background-color: #f8f9fa;
+    }
+
+    a, a:visited {
+        color: #0070ff;
+    }
+
+    a:active, a:focus, a:hover {
+        color: #0070ff;
+        opacity: .75;
+    }
+
+    #post-content a,
+    #post-content a:hover,
+    #post-content a:focus,
+    #post-content a:visited {
+        color: #005eb9;
+        opacity: 1;
+    }
+
+    
+
+    .post-entry .card-body a {
+        color: #0070ff;
+    }
+
+    .avatar {
+        background: #444;
+    }
+
+    .navbar-link,
+    .navbar-link:visited,
+    .timeline .timeline-item .timeline-icon.icon-lg {
+        color: #0070ff;
+    }
+
+    .navbar-link:hover {
+        color: #0070ff;
+        opacity: .8;
+    }
+
+    #search-input .btn,
+    #disqus_click_btn,
+    #disqus-switch-to-direct,
+    #disqus-loadmore-button {
+        background: #727e96;
+        border-color: #727e96;
+        color: #fff;
+    }
+
+    #post-toc a.post-toc-link,
+    #post-toc a.post-toc-link:visited,
+    .share-menu.menu .menu-item>a {
+        color: #727e96;
+    }
+
+    .share-menu.menu .menu-item>a:hover,
+    .share-menu.menu .menu-item>a:focus,
+    .share-menu.menu .menu-item>a:visited {
+        color: #50596c;
+        background: #f8f9fa;
+        opacity: .85;
+    }
+</style><link rel="stylesheet" href="/css/style.min.css">
+
+
+
+
+
+
+
+
+    <!-- Prettify Theme -->
+    
+    <link rel="preload" href="/css/highlight/github.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="/css/highlight/github.min.css"></noscript>
+
+
+
+
+
+<script>
+/*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+!function(t){"use strict";t.loadCSS||(t.loadCSS=function(){});var e=loadCSS.relpreload={};if(e.support=function(){var e;try{e=t.document.createElement("link").relList.supports("preload")}catch(t){e=!1}return function(){return e}}(),e.bindMediaToggle=function(t){var e=t.media||"all";function a(){t.addEventListener?t.removeEventListener("load",a):t.attachEvent&&t.detachEvent("onload",a),t.setAttribute("onload",null),t.media=e}t.addEventListener?t.addEventListener("load",a):t.attachEvent&&t.attachEvent("onload",a),setTimeout(function(){t.rel="stylesheet",t.media="only x"}),setTimeout(a,3e3)},e.poly=function(){if(!e.support())for(var a=t.document.getElementsByTagName("link"),n=0;n<a.length;n++){var o=a[n];"preload"!==o.rel||"style"!==o.getAttribute("as")||o.getAttribute("data-loadcss")||(o.setAttribute("data-loadcss",!0),e.bindMediaToggle(o))}},!e.support()){e.poly();var a=t.setInterval(e.poly,500);t.addEventListener?t.addEventListener("load",function(){e.poly(),t.clearInterval(a)}):t.attachEvent&&t.attachEvent("onload",function(){e.poly(),t.clearInterval(a)})}"undefined"!=typeof exports?exports.loadCSS=loadCSS:t.loadCSS=loadCSS}("undefined"!=typeof global?global:this);
+</script>
+
+    <!-- ### Site Verification ### -->
+    
+
+
+    <meta name="mobile-web-app-capable" content="yes"><meta name="application-name" content="ShinonomeLab"><meta name="msapplication-starturl" content="http://yoursite.com"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="ShinonomeLab"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <!-- ### The Open Graph & Twitter Card Protocol ### -->
+    <meta property="og:title" content="curl指令与http请求响应 | ShinonomeLab"><meta property="og:site_name" content="ShinonomeLab"><meta property="og:type" content="article"><meta property="og:url" content="http://yoursite.com/2019/05/30/curl%E6%8C%87%E4%BB%A4%E4%B8%8Ehttp%E8%AF%B7%E6%B1%82%E5%93%8D%E5%BA%94/"><meta property="og:locale" content="zh-Hans"><meta name="description" content="curl简单介绍​      curl是一种命令行工具，作用是发出网络请求，然后得到和提取数据，显示在“标准输出”（stdout）上面。 它支持多种协议，下面举例讲解如何作用于网站开发。 ​      一、查看网页源码直接在curl命令后加上网址，就可以看到网页源码。 1$ curl www.baidu.com  1234&amp;lt;!DOCTYPE html&amp;gt;&amp;lt;html&amp;gt;略&amp;lt; - 一堆热情 - ShinonomeLab"><meta name="keywords" content="http"><meta property="og:image" content="http://yoursite.com/2019/05/30/curl%E6%8C%87%E4%BB%A4%E4%B8%8Ehttp%E8%AF%B7%E6%B1%82%E5%93%8D%E5%BA%94/img/curl.png"><meta property="article:published_time" content="2019-05-29T16:00:00.000Z"><meta property="article:modified_time" content="2020-08-13T09:53:56.025Z"><meta property="og:updated_time" content="2020-08-13T09:53:56.025Z"><meta property="article:author" content="一堆热情"><meta property="article:tag" content="http"><meta name="twitter:card" content="summary">
+
+    
+
+    <!-- ### Canonical link ### -->
+    <link rel="canonical" href="http://yoursite.com/2019/05/30/curl%E6%8C%87%E4%BB%A4%E4%B8%8Ehttp%E8%AF%B7%E6%B1%82%E5%93%8D%E5%BA%94/">
+
+    <meta name="generator" content="Hexo 4.2.1">
+
+    <!-- ### Analytics ### -->
+    
+
+
+
+
+
+
+
+    <!-- ### Structured Data ### -->
+    
+
+
+
+<script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "url": "http://yoursite.com/2019/05/30/curl%E6%8C%87%E4%BB%A4%E4%B8%8Ehttp%E8%AF%B7%E6%B1%82%E5%93%8D%E5%BA%94/",
+    "@type": "BlogPosting",
+    "logo": "http://yoursite.com/android-chrome-192x192.png",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "http://yoursite.com/2019/05/30/curl%E6%8C%87%E4%BB%A4%E4%B8%8Ehttp%E8%AF%B7%E6%B1%82%E5%93%8D%E5%BA%94/"
+    },
+    "headline": "curl指令与http请求响应 | ShinonomeLab",
+    
+    "image": {
+        "@type": "ImageObject",
+        "url": "http://yoursite.com/android-chrome-192x192.png"
+    },
+    
+    "datePublished": "2019-05-29T16:00:00.000Z",
+    "dateModified": "2020-08-13T09:53:56.025Z",
+    "author": {
+        "@type": "Person",
+        "name": "一堆热情",
+        "image": {
+            "@type": "ImageObject",
+            "url": "http://yoursite.com/img/avatar.png"
+        },
+        "description": "東雲研究所の今日も平和です"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "ShinonomeLab",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "http://yoursite.com/android-chrome-192x192.png"
+        }
+    },
+    
+    "potentialAction": {
+        "@type": "SearchAction",
+        "target": "http://yoursite.com/search?s={search_term_string}",
+        "query-input": "required name=search_term_string"
+    },
+    
+    "keywords": "http",
+    "description": "curl简单介绍​      curl是一种命令行工具，作用是发出网络请求，然后得到和提取数据，显示在“标准输出”（stdout）上面。 它支持多种协议，下面举例讲解如何作用于网站开发。 ​      一、查看网页源码直接在curl命令后加上网址，就可以看到网页源码。 1$ curl www.baidu.com  1234&amp;amp;lt;!DOCTYPE html&amp;amp;gt;&amp;amp;lt;html&amp;amp;gt;略&amp;amp;lt; - 一堆热情 - ShinonomeLab"
+}
+</script>
+
+
+
+    <!-- ### Custom Head ### -->
+    
+</head>
+
+    <body>
+            
+
+            <!-- ### Main content ### -->
+            <!-- ## Header ##-->
+<header>
+    <h1 class="header-title text-center"><a href="/">ShinonomeLab</a></h1>
+
+    <p class="text-center header-slogan">
+        
+            
+                東雲研究所の今日も平和です
+            
+        
+    </p>
+
+    <nav class="navbar-section text-center">
+    
+        <a href="/" class="navbar-link">Home</a>
+    
+    
+        <a href="/archives/" class="navbar-link">Archives</a>
+    
+    
+    
+    
+        <div class="dropdown dropdown-right">
+    <a class="navbar-link dropdown-toggle" tabindex="0">Share</a>
+    <ul class="menu share-menu">
+
+        <!-- Share Weibo -->
+        
+        <li class="menu-item">
+            <a href="http://service.weibo.com/share/share.php?appkey=&title=ShinonomeLab&url=http://yoursite.com&pic=http://yoursite.com/android-chrome-192x192.png&searchPic=false&style=simple" target="_blank" rel="external noopener noreferrer nofollow">Share to Weibo</a>
+        </li>
+        
+
+        <!-- Share Twitter -->
+        
+
+        <!-- Share Facebook -->
+        
+
+        <!-- Share Google+ -->
+        
+        <li class="menu-item">
+            <a href="https://plus.google.com/share?url=http://yoursite.com" target="_blank" rel="external noopener noreferrer nofollow">Share to Google+</a>
+        </li>
+        
+
+        <!-- Share LinkedIn -->
+        
+
+        <!-- Share QQ -->
+        
+        <li class="menu-item">
+            <a href="http://connect.qq.com/widget/shareqq/index.html?site=ShinonomeLab&title=curl指令与http请求响应&summary=&pics=http://yoursite.com/android-chrome-192x192.png&url=http://yoursite.com" target="_blank" rel="external noopener noreferrer nofollow"> Share to QQ</a>
+        </li>
+        
+
+        <!-- Share Telegram -->
+        
+        <li class="menu-item">
+            <a href="https://t.me/share/url?url=http://yoursite.com&text=curl指令与http请求响应" target="_blank" rel="external noopener noreferrer nofollow">Share to Telegram</a>
+        </li>
+        
+
+        <!-- QRCode -->
+        
+
+    </ul>
+</div>
+    
+    
+</nav>
+</header>
+
+            
+    <!-- ## Post ## -->
+    <div class="post-container">
+    <div id="post-card" class="card">
+        
+        <div class="card-item-container">
+            <div class="card-inner-cell">
+                <!-- # Post Header Info # -->
+                <div class="card-header">
+                    
+    <h1 class="card-title h3 mb-2">curl指令与http请求响应</h1>
+
+
+
+
+<div class="post-header-info">
+    <p class="post-header-info-left text-gray">
+        <img class="author-thumb lazyload" data-src="/img/avatar.png" src="/img/suka-lazyload.gif" alt="一堆热情's Avatar">
+        <span>2019-05-30</span>
+        
+        
+        
+    </p>
+    <div class="post-header-info-right">
+        
+            <div class="dropdown dropdown-right">
+<a class="dropdown-toggle" tabindex="0">Share the post</a>
+<ul class="menu share-menu">
+    <!-- Share Weibo -->
+    
+    <li class="menu-item">
+        <a href="http://service.weibo.com/share/share.php?appkey=&title=curl指令与http请求响应&url=http://yoursite.com/2019/05/30/curl%E6%8C%87%E4%BB%A4%E4%B8%8Ehttp%E8%AF%B7%E6%B1%82%E5%93%8D%E5%BA%94/&pic=http://yoursite.com/android-chrome-192x192.png&searchPic=false&style=simple" target="_blank" rel="external noopener noreferrer nofollow">Share to Weibo</a>
+    </li>
+    
+
+    <!-- Share Twitter -->
+    
+
+    <!-- Share Facebook -->
+    
+
+    <!-- Share Google+ -->
+    
+    <li class="menu-item">
+        <a href="https://plus.google.com/share?url=http://yoursite.com/2019/05/30/curl%E6%8C%87%E4%BB%A4%E4%B8%8Ehttp%E8%AF%B7%E6%B1%82%E5%93%8D%E5%BA%94/" target="_blank" rel="external noopener noreferrer nofollow">Share to Google+</a>
+    </li>
+    
+
+    <!-- Share LinkedIn -->
+    
+
+    <!-- Share QQ -->
+    
+    <li class="menu-item">
+        <a href="http://connect.qq.com/widget/shareqq/index.html?site=ShinonomeLab&title=ShinonomeLab&summary=&pics=http://yoursite.com/android-chrome-192x192.png&url=http://yoursite.com/2019/05/30/curl%E6%8C%87%E4%BB%A4%E4%B8%8Ehttp%E8%AF%B7%E6%B1%82%E5%93%8D%E5%BA%94/" target="_blank" rel="external noopener noreferrer nofollow"> Share to QQ</a>
+    </li>
+    
+
+    <!-- Share Telegram -->
+    
+    <li class="menu-item">
+        <a href="https://t.me/share/url?url=http://yoursite.com/2019/05/30/curl%E6%8C%87%E4%BB%A4%E4%B8%8Ehttp%E8%AF%B7%E6%B1%82%E5%93%8D%E5%BA%94/&text=ShinonomeLab" target="_blank" rel="external noopener noreferrer nofollow">Share to Telegram</a>
+    </li>
+    
+
+    <!-- QRCode -->
+    
+
+</ul>
+</div>
+        
+    </div>
+</div>
+                </div>
+                <div class="card-body">
+                    
+                        
+                        
+                            <div id="post-toc"><ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#curl简单介绍"><span class="post-toc-number">1.</span> <span class="post-toc-text">curl简单介绍</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一、查看网页源码"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">一、查看网页源码</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二、显示通信过程"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">二、显示通信过程</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#三、发送表单信息"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">三、发送表单信息</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#四、HTTP动词"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">四、HTTP动词</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#HTTP-响应"><span class="post-toc-number">2.</span> <span class="post-toc-text">HTTP 响应</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#请求示例"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">请求示例</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#请求的格式"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">请求的格式</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#用-Chrome-开发者工具查看-HTTP-请求内容"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">用 Chrome 开发者工具查看 HTTP 请求内容</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#HTTP-响应-1"><span class="post-toc-number">3.</span> <span class="post-toc-text">HTTP 响应</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#响应示例"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">响应示例</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#响应的格式"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">响应的格式</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#使用Chrome开发者工具查看-HTTP-响应内容"><span class="post-toc-number">4.</span> <span class="post-toc-text">使用Chrome开发者工具查看 HTTP 响应内容</span></a></li></ol></div>
+                        
+                    
+                    <article id="post-content">
+                        <h2 id="curl简单介绍"><a href="#curl简单介绍" class="headerlink" title="curl简单介绍"></a>curl简单介绍</h2><p>​    </p>
+<p><img src="img/curl.png" alt="curl"></p>
+<p>curl是一种命令行工具，作用是发出网络请求，然后得到和提取数据，显示在“标准输出”（stdout）上面。</p>
+<p>它支持多种协议，下面举例讲解如何作用于网站开发。</p>
+<p>​    </p>
+<hr>
+<h3 id="一、查看网页源码"><a href="#一、查看网页源码" class="headerlink" title="一、查看网页源码"></a>一、查看网页源码</h3><p>直接在curl命令后加上网址，就可以看到网页源码。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ curl www.baidu.com</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">略</span><br><span class="line">&lt;&#x2F;html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>​    </p>
+<hr>
+<h3 id="二、显示通信过程"><a href="#二、显示通信过程" class="headerlink" title="二、显示通信过程"></a>二、显示通信过程</h3><p><strong>-v</strong> 参数可以显示一次http通信的整个过程，包括端口连接和http request头信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ curl -v www.baidu.com</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&gt; GET &#x2F; HTTP&#x2F;1.1</span><br><span class="line">&gt; Host: www.baidu.com</span><br><span class="line">&gt; User-Agent: curl&#x2F;7.64.0</span><br><span class="line">&gt; Accept: *&#x2F;*</span><br><span class="line">&gt;</span><br><span class="line">&lt; HTTP&#x2F;1.1 200 OK</span><br><span class="line">&lt; Accept-Ranges: bytes</span><br><span class="line">&lt; Cache-Control: private, no-cache, no-store, proxy-revalidate, no-transform</span><br><span class="line">&lt; Connection: Keep-Alive</span><br><span class="line">&lt; Content-Length: 2381</span><br><span class="line">&lt; Content-Type: text&#x2F;html</span><br><span class="line">&lt; Date: Sun, 26 May 2019 10:00:57 GMT</span><br><span class="line">&lt; Etag: &quot;588604c8-94d&quot;</span><br><span class="line">&lt; Last-Modified: Mon, 23 Jan 2017 13:27:36 GMT</span><br><span class="line">&lt; Pragma: no-cache</span><br><span class="line">&lt; Server: bfe&#x2F;1.0.8.18</span><br><span class="line">&lt; Set-Cookie: BDORZ&#x3D;27315; max-age&#x3D;86400; domain&#x3D;.baidu.com; path&#x3D;&#x2F;</span><br><span class="line">&lt;</span><br><span class="line">&lt;DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">略</span><br><span class="line">&lt;&#x2F;html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>​    </p>
+<hr>
+<h3 id="三、发送表单信息"><a href="#三、发送表单信息" class="headerlink" title="三、发送表单信息"></a>三、发送表单信息</h3><p>发送表单信息有GET和POST两种方法。GET方法相对简单，只要把数据附在网址后面就行。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ curl example.com&#x2F;form.cgi?data&#x3D;xxx</span><br></pre></td></tr></table></figure>
+
+<p>POST方法必须把数据和网址分开，curl就要用到–data参数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ curl -X POST --data &quot;data&#x3D;xxx&quot; example.com&#x2F;form.cgi</span><br></pre></td></tr></table></figure>
+
+<p>​    </p>
+<hr>
+<h3 id="四、HTTP动词"><a href="#四、HTTP动词" class="headerlink" title="四、HTTP动词"></a>四、HTTP动词</h3><p>curl默认的HTTP动词是GET，使用“-X”参数可以支持其他动词。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ curl -X POST www.example.com</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ curl -X DELETE www.example.com</span><br></pre></td></tr></table></figure>
+
+<p><strong>详细请看：阮一峰 <a href="http://www.ruanyifeng.com/blog/2011/09/curl.html" target="_blank" rel="noopener">http://www.ruanyifeng.com/blog/2011/09/curl.html</a></strong></p>
+<p>​    </p>
+<hr>
+<h2 id="HTTP-响应"><a href="#HTTP-响应" class="headerlink" title="HTTP 响应"></a>HTTP 响应</h2><h3 id="请求示例"><a href="#请求示例" class="headerlink" title="请求示例"></a>请求示例</h3><p>请求1</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ curl -s -v -H &quot;Frank: xxx&quot; -- &quot;https:&#x2F;&#x2F;www.baidu.com&quot;</span><br></pre></td></tr></table></figure>
+
+<p>注：**-s** 静默模式，不显示进度表或错误信息，使curl静音</p>
+<p>请求的内容为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">GET &#x2F; HTTP&#x2F;1.1</span><br><span class="line">Host: www.baidu.com</span><br><span class="line">User-Agent: curl&#x2F;7.54.0</span><br><span class="line">Accept: *&#x2F;*</span><br><span class="line">Frank: xxx</span><br><span class="line"></span><br><span class="line">curl -X POST -s -v -H &quot;Frank: xxx&quot; -- &quot;https:&#x2F;&#x2F;www.baidu.com&quot;</span><br></pre></td></tr></table></figure>
+
+<p>请求2</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ curl -X POST -s -v -H &quot;Frank: xxx&quot; -- &quot;https:&#x2F;&#x2F;www.baidu.com&quot;</span><br></pre></td></tr></table></figure>
+
+<p>注：**-H** 自定义头信息传递给服务器</p>
+<p>请求的内容为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">POST &#x2F; HTTP&#x2F;1.1</span><br><span class="line">Host: www.baidu.com</span><br><span class="line">User-Agent: curl&#x2F;7.54.0</span><br><span class="line">Accept: *&#x2F;*</span><br><span class="line">Frank: xxx</span><br></pre></td></tr></table></figure>
+
+<p>请求3</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ curl -X POST -d &quot;1234567890&quot; -s -v -H &quot;Frank: xxx&quot; -- &quot;https:&#x2F;&#x2F;www.baidu.com&quot;</span><br></pre></td></tr></table></figure>
+
+<p>请求的内容为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">POST &#x2F; HTTP&#x2F;1.1</span><br><span class="line">Host: www.baidu.com</span><br><span class="line">User-Agent: curl&#x2F;7.54.0</span><br><span class="line">Accept: *&#x2F;*</span><br><span class="line">Frank: xxx</span><br><span class="line">Content-Length: 10</span><br><span class="line">Content-Type: application&#x2F;x-www-form-urlencoded</span><br><span class="line"></span><br><span class="line">1234567890</span><br></pre></td></tr></table></figure>
+
+<p>​    </p>
+<hr>
+<h3 id="请求的格式"><a href="#请求的格式" class="headerlink" title="请求的格式"></a>请求的格式</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">1 动词路径协议&#x2F;版本</span><br><span class="line">2 Key1: value1</span><br><span class="line">2 Key2: value2</span><br><span class="line">2 Key3: value3</span><br><span class="line">2 Content-Type: application&#x2F;x-www-form-urlencoded</span><br><span class="line">2 Host: www.baidu.com</span><br><span class="line">2 User-Agent: curl&#x2F;7.54.0</span><br><span class="line">3 </span><br><span class="line">4 要上传的数据</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>请求最多包含四部分，最少包含三部分。（也就是说第四部分可以为空）</li>
+<li>第三部分永远是一个回车（<code>\n</code>）为了区别开第二与第三</li>
+<li>动词有GET POST PUT PATCH DELETE HEAD OPTIONS 等</li>
+<li>这里的路径包括“查询参数”，但不包括“锚点”</li>
+<li>如果没有写路径，那么路径默认为/</li>
+<li>第二部分中的 Content-Type 标注了第四部分的格式</li>
+</ol>
+<p>​    </p>
+<hr>
+<h3 id="用-Chrome-开发者工具查看-HTTP-请求内容"><a href="#用-Chrome-开发者工具查看-HTTP-请求内容" class="headerlink" title="用 Chrome 开发者工具查看 HTTP 请求内容"></a>用 Chrome 开发者工具查看 HTTP 请求内容</h3><ol>
+<li>打开 Network</li>
+<li>地址栏输入网址</li>
+<li>在 Network 点击，查看 request</li>
+<li>点击「view source」之后，可以看到请求的前三部分了</li>
+<li>如果有请求的第四部分，那么在 FormData 或 Payload 里面可以看到</li>
+</ol>
+<p>注：若是没有显示「view source」可以是用 <strong>curl</strong> 命令查看请求</p>
+<p>​    </p>
+<hr>
+<h2 id="HTTP-响应-1"><a href="#HTTP-响应-1" class="headerlink" title="HTTP 响应"></a>HTTP 响应</h2><p>响应请求了之后，应该都能得到一个响应，除非断网了，或者服务器宕机了。</p>
+<p>​    </p>
+<h3 id="响应示例"><a href="#响应示例" class="headerlink" title="响应示例"></a>响应示例</h3><p>上部分的前两个请求对应的相应分别为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">HTTP&#x2F;1.1 200 OK</span><br><span class="line">Accept-Ranges: bytes</span><br><span class="line">Cache-Control: private, no-cache, no-store, proxy-revalidate, no-transform</span><br><span class="line">Connection: Keep-Alive</span><br><span class="line">Content-Length: 2443</span><br><span class="line">Content-Type: text&#x2F;html</span><br><span class="line">Date: Tue, 10 Oct 2017 09:14:05 GMT</span><br><span class="line">Etag: &quot;5886041d-98b&quot;</span><br><span class="line">Last-Modified: Mon, 23 Jan 2017 13:24:45 GMT</span><br><span class="line">Pragma: no-cache</span><br><span class="line">Server: bfe&#x2F;1.0.8.18</span><br><span class="line">Set-Cookie: BDORZ&#x3D;27315; max-age&#x3D;86400; domain&#x3D;.baidu.com; path&#x3D;&#x2F;</span><br><span class="line"></span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;!--STATUS OK--&gt;&lt;html&gt; &lt;head&gt; 后面太长，省略了……</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">HTTP&#x2F;1.1 302 Found</span><br><span class="line">Connection: Keep-Alive</span><br><span class="line">Content-Length: 17931</span><br><span class="line">Content-Type: text&#x2F;html</span><br><span class="line">Date: Tue, 10 Oct 2017 09:19:47 GMT</span><br><span class="line">Etag: &quot;54d9749e-460b&quot;</span><br><span class="line">Server: bfe&#x2F;1.0.8.18</span><br><span class="line"></span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta http-equiv&#x3D;&quot;content-type&quot; content&#x3D;&quot;text&#x2F;html;charset&#x3D;utf-8&quot;&gt; 后面太长，省略了……</span><br></pre></td></tr></table></figure>
+
+<p>GET请求和POST请求对应的响应可以一样，也可以不一样</p>
+<p>​    </p>
+<hr>
+<h3 id="响应的格式"><a href="#响应的格式" class="headerlink" title="响应的格式"></a>响应的格式</h3><p>​     </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">1 协议&#x2F;版本号状态码状态解释</span><br><span class="line">2 Key1: value1</span><br><span class="line">2 Key2: value2</span><br><span class="line">2 Content-Length: 17931</span><br><span class="line">2 Content-Type: text&#x2F;html</span><br><span class="line">3</span><br><span class="line">4 要下载的内容</span><br></pre></td></tr></table></figure>
+
+<p>状态码简明小解</p>
+<ul>
+<li>1xx 不常用</li>
+<li>2xx 表示成功</li>
+<li>3xx 表示滚吧</li>
+<li>4xx 表示你丫错了</li>
+<li>5xx 表示好吧，我错了</li>
+<li>状态解释没什么用</li>
+<li>第 2 部分中的 Content-Type 标注了第 4 部分的格式</li>
+<li>第 2 部分中的 Content-Type 遵循 MIME 规范</li>
+</ul>
+<p>​    </p>
+<hr>
+<h2 id="使用Chrome开发者工具查看-HTTP-响应内容"><a href="#使用Chrome开发者工具查看-HTTP-响应内容" class="headerlink" title="使用Chrome开发者工具查看 HTTP 响应内容"></a>使用Chrome开发者工具查看 HTTP 响应内容</h2><p>​    </p>
+<ol>
+<li>打开Network</li>
+<li>输入网址</li>
+<li>输入网址</li>
+<li>查看 Response Headers，点击「view source」</li>
+<li>你会看到响应的前两部分</li>
+<li>查看 Response 或者 Preview，你会看到响应的第 4 部分</li>
+</ol>
+<p>注：若是没有显示「view source」可以是用 <strong>curl</strong> 命令查看请求</p>
+<p>​    </p>
+
+                    </article>
+                    
+
+
+    <blockquote id="date-expire-notification" class="post-expired-notify">This article was last updated on <span id="date-expire-num"></span> days ago, and the information described in the article may have changed.</blockquote>
+    <script>
+    (function() {
+        var dateUpdate = Date.parse("2020-08-13");
+        var nowDate = new Date();
+        var a = nowDate.getTime();
+        var b = a - dateUpdate;
+        var daysUpdateExpire = Math.floor(b/(24*3600*1000));
+        if (daysUpdateExpire >= 120) {
+            document.getElementById('date-expire-num').innerHTML = daysUpdateExpire;
+        } else {
+            document.getElementById('date-expire-notification').style.display = 'none';
+        }
+    })();
+    </script>
+
+
+<p class="post-footer-info mb-0 pt-0">Published at&nbsp;<time datetime="2019-05-29T16:00:00.000Z" itemprop="datePublished">2019-05-30</time>
+
+    , Updated at&nbsp;<time datetime="2020-08-13T09:53:56.025Z" itemprop="dateModified">2020-08-13</time>
+
+</p>
+<p class="post-footer-info mb-0 pt-2">
+
+
+
+<span class="post-tags-list mt-2">
+
+<a class="post-tags-list-item" href="/tags/http/" rel="tag">#&nbsp;http</a>
+
+</span>
+
+
+</p>
+
+                </div>
+                <div class="post-nav px-2 bg-gray">
+<ul class="pagination">
+    <!-- Prev Nav -->
+    
+        <li class="page-item page-prev">
+            <a href="/2019/06/04/HTML%E5%B8%B8%E7%94%A8%E6%A0%87%E7%AD%BE/" rel="prev">
+                <div class="page-item-title"><i class="icon icon-back" aria-hidden="true"></i></div>
+                <div class="page-item-subtitle">HTML常用标签</div>
+            </a>
+        </li>
+    
+
+    <!-- Next Nav -->
+    
+        <li class="page-item page-next">
+            <a href="/2019/05/26/%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C%E4%BB%A5%E5%8F%8Aexplainshell%E7%9A%84%E4%BD%BF%E7%94%A8/" rel="next">
+                <div class="page-item-title"><i class="icon icon-forward" aria-hidden="true"></i></div>
+                <div class="page-item-subtitle">命令行基本操作以及explainshell的使用</div>
+            </a>
+        </li>
+    
+</ul>
+</div>
+
+                
+                    <!-- # Comment # -->
+                    
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+            <!-- ### Footer ### -->
+            <footer class="text-center">
+    <!-- footer copyright -->
+    
+        <p class="footer-copyright mb-0">Copyright&nbsp;©&nbsp;<span id="copyright-year"></span>
+            <a class="footer-copyright-a" href="http://yoursite.com">ShinonomeLab</a>
+        </p>
+
+    <!-- footer custom text -->
+    <p class="footer-text mb-0">
+    
+    </p>
+    <!-- footer develop info -->
+    <p class="footer-develop mb-0">
+        
+
+        
+        Powered by&nbsp;<!--
+         --><a href="https://hexo.io" target="_blank" class="footer-develop-a" rel="external nofollow noopener noreferrer">Hexo</a><span class="footer-develop-divider"></span>Theme&nbsp;-&nbsp;<!--
+         --><a href="https://github.com/SukkaW/hexo-theme-suka" target="_blank" class="footer-develop-a" rel="external noopener">Suka</a>
+    </p>
+</footer>
+
+
+        <!-- ### Import File ### -->
+        <!-- ### Footer JS Import ### -->
+
+<script>
+
+    
+window.lazyLoadOptions = {
+    elements_selector: ".lazyload",
+    threshold: 50
+};
+
+(function() {
+    var copyrightNow = new Date().getFullYear();
+    var copyrightContent = document.getElementById('copyright-year');
+    var copyrightSince = 2019;
+    if (copyrightSince === copyrightNow) {
+        copyrightContent.textContent = copyrightNow;
+    } else {
+        copyrightContent.textContent = copyrightSince + ' - ' + copyrightNow;
+    }
+})();
+console.log('\n %c Suka Theme (hexo-theme-suka) | © SukkaW | Verision 1.3.3 %c https://github.com/SukkaW/hexo-theme-suka \n', 'color: #fff; background: #444; padding:5px 0;', 'background: #bbb; padding:5px 0;');
+
+</script>
+
+<script src="/lib/vanilla-lazyload/lazyload.min.js" async></script>
+
+
+
+<!-- Comment -->
+
+
+<!-- ### Custom Footer ### -->
+
+    </body>
+
+</html>

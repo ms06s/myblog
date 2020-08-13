@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+
+<html lang="zh-Hans">
+    <head>
+    <meta charset="utf-8">
+    <!--
+        hexo-theme-suka © SukkaW
+        GitHub: https://github.com/SukkaW/hexo-theme-suka
+    -->
+
+    <!-- ### Resource Hint ### -->
+
+    <!-- ## DNS Prefetch ## -->
+    <meta http-equiv="x-dns-prefetch-control" content="on">
+
+<!-- busuanzi -->
+
+
+<!-- comment -->
+
+
+
+
+
+
+
+<!-- analytics -->
+
+
+
+
+
+
+
+    <!-- ## Preload ## -->
+    
+
+
+
+
+    <!-- ### Meta & Title & Info ### -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, maximum-scale=5, viewport-fit=cover">
+    <meta name="renderer" content="webkit">
+
+    <!-- Title -->
+    <title>浅析URL | ShinonomeLab</title>
+
+    <!-- Favicons -->
+    <link rel="icon" type="image&#x2F;ico" href="/img/favicon.ico"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="icon" typt="image&#x2F;png" sizes="192x192" href="/android-chrome-192x192.png"><link rel="icon" typt="image&#x2F;png" sizes="32x32" href="/img/favicon-32x32.png"><link rel="icon" typt="image&#x2F;png" sizes="16x16" href="/img/favicon-16x16.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="">
+
+    <!-- ### Import File ### -->
+    <link rel="stylesheet" href="/lib/spectre/spectre.min.css"><style>
+    body {
+        background-color: #f8f9fa;
+    }
+
+    a, a:visited {
+        color: #0070ff;
+    }
+
+    a:active, a:focus, a:hover {
+        color: #0070ff;
+        opacity: .75;
+    }
+
+    #post-content a,
+    #post-content a:hover,
+    #post-content a:focus,
+    #post-content a:visited {
+        color: #005eb9;
+        opacity: 1;
+    }
+
+    
+
+    .post-entry .card-body a {
+        color: #0070ff;
+    }
+
+    .avatar {
+        background: #444;
+    }
+
+    .navbar-link,
+    .navbar-link:visited,
+    .timeline .timeline-item .timeline-icon.icon-lg {
+        color: #0070ff;
+    }
+
+    .navbar-link:hover {
+        color: #0070ff;
+        opacity: .8;
+    }
+
+    #search-input .btn,
+    #disqus_click_btn,
+    #disqus-switch-to-direct,
+    #disqus-loadmore-button {
+        background: #727e96;
+        border-color: #727e96;
+        color: #fff;
+    }
+
+    #post-toc a.post-toc-link,
+    #post-toc a.post-toc-link:visited,
+    .share-menu.menu .menu-item>a {
+        color: #727e96;
+    }
+
+    .share-menu.menu .menu-item>a:hover,
+    .share-menu.menu .menu-item>a:focus,
+    .share-menu.menu .menu-item>a:visited {
+        color: #50596c;
+        background: #f8f9fa;
+        opacity: .85;
+    }
+</style><link rel="stylesheet" href="/css/style.min.css">
+
+
+
+
+
+
+
+
+    <!-- Prettify Theme -->
+    
+    <link rel="preload" href="/css/highlight/github.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="/css/highlight/github.min.css"></noscript>
+
+
+
+
+
+<script>
+/*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+!function(t){"use strict";t.loadCSS||(t.loadCSS=function(){});var e=loadCSS.relpreload={};if(e.support=function(){var e;try{e=t.document.createElement("link").relList.supports("preload")}catch(t){e=!1}return function(){return e}}(),e.bindMediaToggle=function(t){var e=t.media||"all";function a(){t.addEventListener?t.removeEventListener("load",a):t.attachEvent&&t.detachEvent("onload",a),t.setAttribute("onload",null),t.media=e}t.addEventListener?t.addEventListener("load",a):t.attachEvent&&t.attachEvent("onload",a),setTimeout(function(){t.rel="stylesheet",t.media="only x"}),setTimeout(a,3e3)},e.poly=function(){if(!e.support())for(var a=t.document.getElementsByTagName("link"),n=0;n<a.length;n++){var o=a[n];"preload"!==o.rel||"style"!==o.getAttribute("as")||o.getAttribute("data-loadcss")||(o.setAttribute("data-loadcss",!0),e.bindMediaToggle(o))}},!e.support()){e.poly();var a=t.setInterval(e.poly,500);t.addEventListener?t.addEventListener("load",function(){e.poly(),t.clearInterval(a)}):t.attachEvent&&t.attachEvent("onload",function(){e.poly(),t.clearInterval(a)})}"undefined"!=typeof exports?exports.loadCSS=loadCSS:t.loadCSS=loadCSS}("undefined"!=typeof global?global:this);
+</script>
+
+    <!-- ### Site Verification ### -->
+    
+
+
+    <meta name="mobile-web-app-capable" content="yes"><meta name="application-name" content="ShinonomeLab"><meta name="msapplication-starturl" content="http://yoursite.com"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="ShinonomeLab"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <!-- ### The Open Graph & Twitter Card Protocol ### -->
+    <meta property="og:title" content="浅析URL | ShinonomeLab"><meta property="og:site_name" content="ShinonomeLab"><meta property="og:type" content="article"><meta property="og:url" content="http://yoursite.com/2019/05/13/%E6%B5%85%E6%9E%90URL/"><meta property="og:locale" content="zh-Hans"><meta name="description" content="浅析URL李爵士发明了三样东西 URL、HTTP、HTML，这三样东西组成了万维网今天就主要来了解下URL这就要从ip说起 Internet Protocolprotocol的意思就是协议只要身在互联网中，你至少有一个独特的IPIP主要干了两件事  如何定位一台设备 如何封装数据报文，以跟其他设备交流（因为是浅析URL，所以这个具体内容不关心）  几个特殊的IP127.0.0.1 表示自己loca - 一堆热情 - ShinonomeLab"><meta name="keywords" content="http"><meta property="og:image" content="https://cdn.nlark.com/yuque/0/2020/png/822431/1594884222713-7636b8aa-5913-4f6c-8ce2-a054fe8a4fe3.png#align=left&display=inline&height=325&margin=%5Bobject%20Object%5D&name=image.png&originHeight=325&originWidth=696&size=67435&status=done&style=none&width=696"><meta property="og:image" content="https://cdn.nlark.com/yuque/0/2020/png/822431/1594887995559-d7158654-d9e0-4b89-8728-3b14630d2731.png#align=left&display=inline&height=300&margin=%5Bobject%20Object%5D&name=image.png&originHeight=300&originWidth=797&size=132057&status=done&style=none&width=797"><meta property="article:published_time" content="2019-05-12T16:00:00.000Z"><meta property="article:modified_time" content="2020-08-13T09:54:39.588Z"><meta property="og:updated_time" content="2020-08-13T09:54:39.588Z"><meta property="article:author" content="一堆热情"><meta property="article:tag" content="http"><meta name="twitter:card" content="summary">
+
+    
+
+    <!-- ### Canonical link ### -->
+    <link rel="canonical" href="http://yoursite.com/2019/05/13/%E6%B5%85%E6%9E%90URL/">
+
+    <meta name="generator" content="Hexo 4.2.1">
+
+    <!-- ### Analytics ### -->
+    
+
+
+
+
+
+
+
+    <!-- ### Structured Data ### -->
+    
+
+
+
+<script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "url": "http://yoursite.com/2019/05/13/%E6%B5%85%E6%9E%90URL/",
+    "@type": "BlogPosting",
+    "logo": "http://yoursite.com/android-chrome-192x192.png",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "http://yoursite.com/2019/05/13/%E6%B5%85%E6%9E%90URL/"
+    },
+    "headline": "浅析URL | ShinonomeLab",
+    
+    "image": {
+        "@type": "ImageObject",
+        "url": "http://yoursite.com/android-chrome-192x192.png"
+    },
+    
+    "datePublished": "2019-05-12T16:00:00.000Z",
+    "dateModified": "2020-08-13T09:54:39.588Z",
+    "author": {
+        "@type": "Person",
+        "name": "一堆热情",
+        "image": {
+            "@type": "ImageObject",
+            "url": "http://yoursite.com/img/avatar.png"
+        },
+        "description": "東雲研究所の今日も平和です"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "ShinonomeLab",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "http://yoursite.com/android-chrome-192x192.png"
+        }
+    },
+    
+    "potentialAction": {
+        "@type": "SearchAction",
+        "target": "http://yoursite.com/search?s={search_term_string}",
+        "query-input": "required name=search_term_string"
+    },
+    
+    "keywords": "http",
+    "description": "浅析URL李爵士发明了三样东西 URL、HTTP、HTML，这三样东西组成了万维网今天就主要来了解下URL这就要从ip说起 Internet Protocolprotocol的意思就是协议只要身在互联网中，你至少有一个独特的IPIP主要干了两件事  如何定位一台设备 如何封装数据报文，以跟其他设备交流（因为是浅析URL，所以这个具体内容不关心）  几个特殊的IP127.0.0.1 表示自己loca - 一堆热情 - ShinonomeLab"
+}
+</script>
+
+
+
+    <!-- ### Custom Head ### -->
+    
+</head>
+
+    <body>
+            
+
+            <!-- ### Main content ### -->
+            <!-- ## Header ##-->
+<header>
+    <h1 class="header-title text-center"><a href="/">ShinonomeLab</a></h1>
+
+    <p class="text-center header-slogan">
+        
+            
+                東雲研究所の今日も平和です
+            
+        
+    </p>
+
+    <nav class="navbar-section text-center">
+    
+        <a href="/" class="navbar-link">Home</a>
+    
+    
+        <a href="/archives/" class="navbar-link">Archives</a>
+    
+    
+    
+    
+        <div class="dropdown dropdown-right">
+    <a class="navbar-link dropdown-toggle" tabindex="0">Share</a>
+    <ul class="menu share-menu">
+
+        <!-- Share Weibo -->
+        
+        <li class="menu-item">
+            <a href="http://service.weibo.com/share/share.php?appkey=&title=ShinonomeLab&url=http://yoursite.com&pic=http://yoursite.com/android-chrome-192x192.png&searchPic=false&style=simple" target="_blank" rel="external noopener noreferrer nofollow">Share to Weibo</a>
+        </li>
+        
+
+        <!-- Share Twitter -->
+        
+
+        <!-- Share Facebook -->
+        
+
+        <!-- Share Google+ -->
+        
+        <li class="menu-item">
+            <a href="https://plus.google.com/share?url=http://yoursite.com" target="_blank" rel="external noopener noreferrer nofollow">Share to Google+</a>
+        </li>
+        
+
+        <!-- Share LinkedIn -->
+        
+
+        <!-- Share QQ -->
+        
+        <li class="menu-item">
+            <a href="http://connect.qq.com/widget/shareqq/index.html?site=ShinonomeLab&title=浅析URL&summary=&pics=http://yoursite.com/android-chrome-192x192.png&url=http://yoursite.com" target="_blank" rel="external noopener noreferrer nofollow"> Share to QQ</a>
+        </li>
+        
+
+        <!-- Share Telegram -->
+        
+        <li class="menu-item">
+            <a href="https://t.me/share/url?url=http://yoursite.com&text=浅析URL" target="_blank" rel="external noopener noreferrer nofollow">Share to Telegram</a>
+        </li>
+        
+
+        <!-- QRCode -->
+        
+
+    </ul>
+</div>
+    
+    
+</nav>
+</header>
+
+            
+    <!-- ## Post ## -->
+    <div class="post-container">
+    <div id="post-card" class="card">
+        
+        <div class="card-item-container">
+            <div class="card-inner-cell">
+                <!-- # Post Header Info # -->
+                <div class="card-header">
+                    
+    <h1 class="card-title h3 mb-2">浅析URL</h1>
+
+
+
+
+<div class="post-header-info">
+    <p class="post-header-info-left text-gray">
+        <img class="author-thumb lazyload" data-src="/img/avatar.png" src="/img/suka-lazyload.gif" alt="一堆热情's Avatar">
+        <span>2019-05-13</span>
+        
+        
+        
+    </p>
+    <div class="post-header-info-right">
+        
+            <div class="dropdown dropdown-right">
+<a class="dropdown-toggle" tabindex="0">Share the post</a>
+<ul class="menu share-menu">
+    <!-- Share Weibo -->
+    
+    <li class="menu-item">
+        <a href="http://service.weibo.com/share/share.php?appkey=&title=浅析URL&url=http://yoursite.com/2019/05/13/%E6%B5%85%E6%9E%90URL/&pic=http://yoursite.com/android-chrome-192x192.png&searchPic=false&style=simple" target="_blank" rel="external noopener noreferrer nofollow">Share to Weibo</a>
+    </li>
+    
+
+    <!-- Share Twitter -->
+    
+
+    <!-- Share Facebook -->
+    
+
+    <!-- Share Google+ -->
+    
+    <li class="menu-item">
+        <a href="https://plus.google.com/share?url=http://yoursite.com/2019/05/13/%E6%B5%85%E6%9E%90URL/" target="_blank" rel="external noopener noreferrer nofollow">Share to Google+</a>
+    </li>
+    
+
+    <!-- Share LinkedIn -->
+    
+
+    <!-- Share QQ -->
+    
+    <li class="menu-item">
+        <a href="http://connect.qq.com/widget/shareqq/index.html?site=ShinonomeLab&title=ShinonomeLab&summary=&pics=http://yoursite.com/android-chrome-192x192.png&url=http://yoursite.com/2019/05/13/%E6%B5%85%E6%9E%90URL/" target="_blank" rel="external noopener noreferrer nofollow"> Share to QQ</a>
+    </li>
+    
+
+    <!-- Share Telegram -->
+    
+    <li class="menu-item">
+        <a href="https://t.me/share/url?url=http://yoursite.com/2019/05/13/%E6%B5%85%E6%9E%90URL/&text=ShinonomeLab" target="_blank" rel="external noopener noreferrer nofollow">Share to Telegram</a>
+    </li>
+    
+
+    <!-- QRCode -->
+    
+
+</ul>
+</div>
+        
+    </div>
+</div>
+                </div>
+                <div class="card-body">
+                    
+                        
+                        
+                            <div id="post-toc"><ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#浅析URL"><span class="post-toc-number">1.</span> <span class="post-toc-text">浅析URL</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Internet-Protocol"><span class="post-toc-number">2.</span> <span class="post-toc-text">Internet Protocol</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#端口"><span class="post-toc-number">3.</span> <span class="post-toc-text">端口</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#域名"><span class="post-toc-number">4.</span> <span class="post-toc-text">域名</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#DNS"><span class="post-toc-number">5.</span> <span class="post-toc-text">DNS</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#如何请求不同的页面"><span class="post-toc-number">6.</span> <span class="post-toc-text">如何请求不同的页面</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#同一个页面，不同内容"><span class="post-toc-number">7.</span> <span class="post-toc-text">同一个页面，不同内容</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#同一个内容，不同位置"><span class="post-toc-number">8.</span> <span class="post-toc-text">同一个内容，不同位置</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#URL"><span class="post-toc-number">9.</span> <span class="post-toc-text">URL</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#协议-域名或IP-端口号-路径-查询字符串-锚点"><span class="post-toc-number">9.1.</span> <span class="post-toc-text">协议+域名或IP+端口号+路径+查询字符串+锚点</span></a></li></ol></li></ol></div>
+                        
+                    
+                    <article id="post-content">
+                        <h1 id="浅析URL"><a href="#浅析URL" class="headerlink" title="浅析URL"></a>浅析URL</h1><p>李爵士发明了三样东西 URL、HTTP、HTML，这三样东西组成了万维网<br>今天就主要来了解下URL<br>这就要从ip说起</p>
+<h1 id="Internet-Protocol"><a href="#Internet-Protocol" class="headerlink" title="Internet Protocol"></a>Internet Protocol</h1><p>protocol的意思就是协议<br>只要身在互联网中，你至少有一个独特的IP<br>IP主要干了两件事</p>
+<ol>
+<li>如何定位一台设备</li>
+<li>如何封装数据报文，以跟其他设备交流（因为是浅析URL，所以这个具体内容不关心）</li>
+</ol>
+<p>几个特殊的IP<br>127.0.0.1 表示自己<br>localhost 通过hosts指定为自己<br>0.0.0.0不表示任何设备</p>
+<p>有了IP，知道了服务器的地址，那么还需要什么？</p>
+<h1 id="端口"><a href="#端口" class="headerlink" title="端口"></a>端口</h1><p>还需要端口提供网络服务</p>
+<p>一台机器可以提供很多服务，每个服务一个号码，这个号码就叫做端口号port</p>
+<p>要提供HTTP服务最好使用80端口<br>要提供HTTPS服务最好使用443端口<br>一共有65535个端口（不愁用）</p>
+<p>总之端口和IP缺一不可</p>
+<p>有人可能会觉得IP地址这么长一串，头大！<br>别慌，我们来了解一下域名</p>
+<h1 id="域名"><a href="#域名" class="headerlink" title="域名"></a>域名</h1><p>域名就是对IP的别称<br>我们在网址框打的baidu.com对应什么IP呢？<br>我们这时就可以使用ping工具<br><img src="https://cdn.nlark.com/yuque/0/2020/png/822431/1594884222713-7636b8aa-5913-4f6c-8ce2-a054fe8a4fe3.png#align=left&display=inline&height=325&margin=%5Bobject%20Object%5D&name=image.png&originHeight=325&originWidth=696&size=67435&status=done&style=none&width=696" alt="image.png"><br>[39.156.69.79]就是baidu.com对应的IP地址</p>
+<p>有的小伙伴ping baidu.com可能得到的和我不是一个ip地址<br>一个域名可以对应不同IP<br>访问 baidu.com 华南华北的可能就不是一个ip地址，防止人数太多服务器撑不住，这个叫做均衡负载<br>同样一个IP也可以对应不同的域名，这个叫做共享主机，穷开发者会这么做</p>
+<p>域名和IP又是怎么对应起来的呢？<br>通过DNS</p>
+<h1 id="DNS"><a href="#DNS" class="headerlink" title="DNS"></a>DNS</h1><p>DNS全名为Domain Name System 域名解析系统</p>
+<p>当你在网址栏输入baidu.com时<br>你的chrome浏览器会向电信/联通提供的DNS服务器询问baidu.com对应什么IP<br>电信/连通管会回答一个IP（很复杂）<br>然后chrome才会想对应IP的80/443端口发送请求<br>请求内容是查看baidu.com的首页<br>为什么0是80/443端口？<br>服务器默认使用80提供http服务<br>服务器默认使用443提供https服务</p>
+<h1 id="如何请求不同的页面"><a href="#如何请求不同的页面" class="headerlink" title="如何请求不同的页面"></a>如何请求不同的页面</h1><p>使用不同的路径<br><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTML" target="_blank" rel="noopener">https://developer.mozilla.org/zh-CN/docs/Web/HTML</a><br><a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS" target="_blank" rel="noopener">https://developer.mozilla.org/zh-CN/docs/Web/CSS</a></p>
+<h1 id="同一个页面，不同内容"><a href="#同一个页面，不同内容" class="headerlink" title="同一个页面，不同内容"></a>同一个页面，不同内容</h1><p>使用查询参数<br><a href="http://www.baidu.com/s?wd=hi" target="_blank" rel="noopener">http://www.baidu.com/s?wd=hi</a><br><a href="http://www.baidu.com/s?wd=hello" target="_blank" rel="noopener">http://www.baidu.com/s?wd=hello</a></p>
+<h1 id="同一个内容，不同位置"><a href="#同一个内容，不同位置" class="headerlink" title="同一个内容，不同位置"></a>同一个内容，不同位置</h1><p>使用锚点<br><a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS#%E5%8F%82%E8%80%83%E4%B9%A6" target="_blank" rel="noopener">https://developer.mozilla.org/zh-CN/docs/Web/CSS#参考书</a><br><a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS#%E6%95%99%E7%A8%8B" target="_blank" rel="noopener">https://developer.mozilla.org/zh-CN/docs/Web/CSS#教程</a></p>
+<p>注意<br>锚点不支持中文<br>锚点无法在Network面板看到<br>因为锚点不会传给服务器</p>
+<h1 id="URL"><a href="#URL" class="headerlink" title="URL"></a>URL</h1><p>这时，一个完整的URL就得出了</p>
+<h2 id="协议-域名或IP-端口号-路径-查询字符串-锚点"><a href="#协议-域名或IP-端口号-路径-查询字符串-锚点" class="headerlink" title="协议+域名或IP+端口号+路径+查询字符串+锚点"></a>协议+域名或IP+端口号+路径+查询字符串+锚点</h2><p>举例<br><img src="https://cdn.nlark.com/yuque/0/2020/png/822431/1594887995559-d7158654-d9e0-4b89-8728-3b14630d2731.png#align=left&display=inline&height=300&margin=%5Bobject%20Object%5D&name=image.png&originHeight=300&originWidth=797&size=132057&status=done&style=none&width=797" alt="image.png"><br>就算没写也应该知道端口号<br>HTTPS默认端口443</p>
+
+                    </article>
+                    
+
+
+    <blockquote id="date-expire-notification" class="post-expired-notify">This article was last updated on <span id="date-expire-num"></span> days ago, and the information described in the article may have changed.</blockquote>
+    <script>
+    (function() {
+        var dateUpdate = Date.parse("2020-08-13");
+        var nowDate = new Date();
+        var a = nowDate.getTime();
+        var b = a - dateUpdate;
+        var daysUpdateExpire = Math.floor(b/(24*3600*1000));
+        if (daysUpdateExpire >= 120) {
+            document.getElementById('date-expire-num').innerHTML = daysUpdateExpire;
+        } else {
+            document.getElementById('date-expire-notification').style.display = 'none';
+        }
+    })();
+    </script>
+
+
+<p class="post-footer-info mb-0 pt-0">Published at&nbsp;<time datetime="2019-05-12T16:00:00.000Z" itemprop="datePublished">2019-05-13</time>
+
+    , Updated at&nbsp;<time datetime="2020-08-13T09:54:39.588Z" itemprop="dateModified">2020-08-13</time>
+
+</p>
+<p class="post-footer-info mb-0 pt-2">
+
+
+
+<span class="post-tags-list mt-2">
+
+<a class="post-tags-list-item" href="/tags/http/" rel="tag">#&nbsp;http</a>
+
+</span>
+
+
+</p>
+
+                </div>
+                <div class="post-nav px-2 bg-gray">
+<ul class="pagination">
+    <!-- Prev Nav -->
+    
+        <li class="page-item page-prev">
+            <a href="/2019/05/18/%E4%BB%8EURL%E8%BE%93%E5%85%A5%E5%88%B0%E9%A1%B5%E9%9D%A2%E5%B1%95%E7%8E%B0/" rel="prev">
+                <div class="page-item-title"><i class="icon icon-back" aria-hidden="true"></i></div>
+                <div class="page-item-subtitle">从URL输入到页面展现</div>
+            </a>
+        </li>
+    
+
+    <!-- Next Nav -->
+    
+</ul>
+</div>
+
+                
+                    <!-- # Comment # -->
+                    
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+            <!-- ### Footer ### -->
+            <footer class="text-center">
+    <!-- footer copyright -->
+    
+        <p class="footer-copyright mb-0">Copyright&nbsp;©&nbsp;<span id="copyright-year"></span>
+            <a class="footer-copyright-a" href="http://yoursite.com">ShinonomeLab</a>
+        </p>
+
+    <!-- footer custom text -->
+    <p class="footer-text mb-0">
+    
+    </p>
+    <!-- footer develop info -->
+    <p class="footer-develop mb-0">
+        
+
+        
+        Powered by&nbsp;<!--
+         --><a href="https://hexo.io" target="_blank" class="footer-develop-a" rel="external nofollow noopener noreferrer">Hexo</a><span class="footer-develop-divider"></span>Theme&nbsp;-&nbsp;<!--
+         --><a href="https://github.com/SukkaW/hexo-theme-suka" target="_blank" class="footer-develop-a" rel="external noopener">Suka</a>
+    </p>
+</footer>
+
+
+        <!-- ### Import File ### -->
+        <!-- ### Footer JS Import ### -->
+
+<script>
+
+    
+window.lazyLoadOptions = {
+    elements_selector: ".lazyload",
+    threshold: 50
+};
+
+(function() {
+    var copyrightNow = new Date().getFullYear();
+    var copyrightContent = document.getElementById('copyright-year');
+    var copyrightSince = 2019;
+    if (copyrightSince === copyrightNow) {
+        copyrightContent.textContent = copyrightNow;
+    } else {
+        copyrightContent.textContent = copyrightSince + ' - ' + copyrightNow;
+    }
+})();
+console.log('\n %c Suka Theme (hexo-theme-suka) | © SukkaW | Verision 1.3.3 %c https://github.com/SukkaW/hexo-theme-suka \n', 'color: #fff; background: #444; padding:5px 0;', 'background: #bbb; padding:5px 0;');
+
+</script>
+
+<script src="/lib/vanilla-lazyload/lazyload.min.js" async></script>
+
+
+
+<!-- Comment -->
+
+
+<!-- ### Custom Footer ### -->
+
+    </body>
+
+</html>

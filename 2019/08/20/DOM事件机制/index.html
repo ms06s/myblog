@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+
+<html lang="zh-Hans">
+    <head>
+    <meta charset="utf-8">
+    <!--
+        hexo-theme-suka © SukkaW
+        GitHub: https://github.com/SukkaW/hexo-theme-suka
+    -->
+
+    <!-- ### Resource Hint ### -->
+
+    <!-- ## DNS Prefetch ## -->
+    <meta http-equiv="x-dns-prefetch-control" content="on">
+
+<!-- busuanzi -->
+
+
+<!-- comment -->
+
+
+
+
+
+
+
+<!-- analytics -->
+
+
+
+
+
+
+
+    <!-- ## Preload ## -->
+    
+
+
+
+
+    <!-- ### Meta & Title & Info ### -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, maximum-scale=5, viewport-fit=cover">
+    <meta name="renderer" content="webkit">
+
+    <!-- Title -->
+    <title>DOM事件机制 | ShinonomeLab</title>
+
+    <!-- Favicons -->
+    <link rel="icon" type="image&#x2F;ico" href="/img/favicon.ico"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="icon" typt="image&#x2F;png" sizes="192x192" href="/android-chrome-192x192.png"><link rel="icon" typt="image&#x2F;png" sizes="32x32" href="/img/favicon-32x32.png"><link rel="icon" typt="image&#x2F;png" sizes="16x16" href="/img/favicon-16x16.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="">
+
+    <!-- ### Import File ### -->
+    <link rel="stylesheet" href="/lib/spectre/spectre.min.css"><style>
+    body {
+        background-color: #f8f9fa;
+    }
+
+    a, a:visited {
+        color: #0070ff;
+    }
+
+    a:active, a:focus, a:hover {
+        color: #0070ff;
+        opacity: .75;
+    }
+
+    #post-content a,
+    #post-content a:hover,
+    #post-content a:focus,
+    #post-content a:visited {
+        color: #005eb9;
+        opacity: 1;
+    }
+
+    
+
+    .post-entry .card-body a {
+        color: #0070ff;
+    }
+
+    .avatar {
+        background: #444;
+    }
+
+    .navbar-link,
+    .navbar-link:visited,
+    .timeline .timeline-item .timeline-icon.icon-lg {
+        color: #0070ff;
+    }
+
+    .navbar-link:hover {
+        color: #0070ff;
+        opacity: .8;
+    }
+
+    #search-input .btn,
+    #disqus_click_btn,
+    #disqus-switch-to-direct,
+    #disqus-loadmore-button {
+        background: #727e96;
+        border-color: #727e96;
+        color: #fff;
+    }
+
+    #post-toc a.post-toc-link,
+    #post-toc a.post-toc-link:visited,
+    .share-menu.menu .menu-item>a {
+        color: #727e96;
+    }
+
+    .share-menu.menu .menu-item>a:hover,
+    .share-menu.menu .menu-item>a:focus,
+    .share-menu.menu .menu-item>a:visited {
+        color: #50596c;
+        background: #f8f9fa;
+        opacity: .85;
+    }
+</style><link rel="stylesheet" href="/css/style.min.css">
+
+
+
+
+
+
+
+
+    <!-- Prettify Theme -->
+    
+    <link rel="preload" href="/css/highlight/github.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="/css/highlight/github.min.css"></noscript>
+
+
+
+
+
+<script>
+/*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+!function(t){"use strict";t.loadCSS||(t.loadCSS=function(){});var e=loadCSS.relpreload={};if(e.support=function(){var e;try{e=t.document.createElement("link").relList.supports("preload")}catch(t){e=!1}return function(){return e}}(),e.bindMediaToggle=function(t){var e=t.media||"all";function a(){t.addEventListener?t.removeEventListener("load",a):t.attachEvent&&t.detachEvent("onload",a),t.setAttribute("onload",null),t.media=e}t.addEventListener?t.addEventListener("load",a):t.attachEvent&&t.attachEvent("onload",a),setTimeout(function(){t.rel="stylesheet",t.media="only x"}),setTimeout(a,3e3)},e.poly=function(){if(!e.support())for(var a=t.document.getElementsByTagName("link"),n=0;n<a.length;n++){var o=a[n];"preload"!==o.rel||"style"!==o.getAttribute("as")||o.getAttribute("data-loadcss")||(o.setAttribute("data-loadcss",!0),e.bindMediaToggle(o))}},!e.support()){e.poly();var a=t.setInterval(e.poly,500);t.addEventListener?t.addEventListener("load",function(){e.poly(),t.clearInterval(a)}):t.attachEvent&&t.attachEvent("onload",function(){e.poly(),t.clearInterval(a)})}"undefined"!=typeof exports?exports.loadCSS=loadCSS:t.loadCSS=loadCSS}("undefined"!=typeof global?global:this);
+</script>
+
+    <!-- ### Site Verification ### -->
+    
+
+
+    <meta name="mobile-web-app-capable" content="yes"><meta name="application-name" content="ShinonomeLab"><meta name="msapplication-starturl" content="http://yoursite.com"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="ShinonomeLab"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <!-- ### The Open Graph & Twitter Card Protocol ### -->
+    <meta property="og:title" content="DOM事件机制 | ShinonomeLab"><meta property="og:site_name" content="ShinonomeLab"><meta property="og:type" content="article"><meta property="og:url" content="http://yoursite.com/2019/08/20/DOM%E4%BA%8B%E4%BB%B6%E6%9C%BA%E5%88%B6/"><meta property="og:locale" content="zh-Hans"><meta name="description" content="DOM事件机制研究DOM事件机制，让我从点击事件开始说起 点击事件1234567&amp;lt;div class&#x3D;&quot;grandFather&quot;&amp;gt;  &amp;lt;div class&#x3D;&quot;father&quot;&amp;gt;    &amp;lt;div class&#x3D;&quot;son&quot;&amp;gt;      谁被点了？    &amp;lt;&#x2F;div&amp;gt;  &amp;lt;&#x2F;div&amp;gt;&amp;lt;&#x2F;div&amp;gt; 即.grandFather&amp;gt;.fa - 一堆热情 - ShinonomeLab"><meta name="keywords" content="dom"><meta property="og:image" content="https://cdn.nlark.com/yuque/0/2020/png/822431/1595431848367-85d6e976-8498-4fc7-8da2-0e839fd72d0a.png#align=left&display=inline&height=661&margin=%5Bobject%20Object%5D&name=image.png&originHeight=661&originWidth=629&size=161840&status=done&style=none&width=629"><meta property="og:image" content="https://cdn.nlark.com/yuque/0/2020/png/822431/1595432609848-8b427803-0187-4fb9-bb94-31e19d68a765.png#align=left&display=inline&height=435&margin=%5Bobject%20Object%5D&name=image.png&originHeight=435&originWidth=618&size=234498&status=done&style=none&width=618"><meta property="og:image" content="https://cdn.nlark.com/yuque/0/2020/png/822431/1595435447109-fd0a8404-2928-4407-a4a3-09def1d40441.png#align=left&display=inline&height=280&margin=%5Bobject%20Object%5D&name=image.png&originHeight=280&originWidth=794&size=35713&status=done&style=none&width=794"><meta property="article:published_time" content="2019-08-19T16:00:00.000Z"><meta property="article:modified_time" content="2020-08-13T09:53:59.262Z"><meta property="og:updated_time" content="2020-08-13T09:53:59.262Z"><meta property="article:author" content="一堆热情"><meta property="article:tag" content="dom"><meta name="twitter:card" content="summary">
+
+    
+
+    <!-- ### Canonical link ### -->
+    <link rel="canonical" href="http://yoursite.com/2019/08/20/DOM%E4%BA%8B%E4%BB%B6%E6%9C%BA%E5%88%B6/">
+
+    <meta name="generator" content="Hexo 4.2.1">
+
+    <!-- ### Analytics ### -->
+    
+
+
+
+
+
+
+
+    <!-- ### Structured Data ### -->
+    
+
+
+
+<script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "url": "http://yoursite.com/2019/08/20/DOM%E4%BA%8B%E4%BB%B6%E6%9C%BA%E5%88%B6/",
+    "@type": "BlogPosting",
+    "logo": "http://yoursite.com/android-chrome-192x192.png",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "http://yoursite.com/2019/08/20/DOM%E4%BA%8B%E4%BB%B6%E6%9C%BA%E5%88%B6/"
+    },
+    "headline": "DOM事件机制 | ShinonomeLab",
+    
+    "image": {
+        "@type": "ImageObject",
+        "url": "http://yoursite.com/android-chrome-192x192.png"
+    },
+    
+    "datePublished": "2019-08-19T16:00:00.000Z",
+    "dateModified": "2020-08-13T09:53:59.262Z",
+    "author": {
+        "@type": "Person",
+        "name": "一堆热情",
+        "image": {
+            "@type": "ImageObject",
+            "url": "http://yoursite.com/img/avatar.png"
+        },
+        "description": "東雲研究所の今日も平和です"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "ShinonomeLab",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "http://yoursite.com/android-chrome-192x192.png"
+        }
+    },
+    
+    "potentialAction": {
+        "@type": "SearchAction",
+        "target": "http://yoursite.com/search?s={search_term_string}",
+        "query-input": "required name=search_term_string"
+    },
+    
+    "keywords": "dom",
+    "description": "DOM事件机制研究DOM事件机制，让我从点击事件开始说起 点击事件1234567&amp;amp;lt;div class=&amp;quot;grandFather&amp;quot;&amp;amp;gt;  &amp;amp;lt;div class=&amp;quot;father&amp;quot;&amp;amp;gt;    &amp;amp;lt;div class=&amp;quot;son&amp;quot;&amp;amp;gt;      谁被点了？    &amp;amp;lt;/div&amp;amp;gt;  &amp;amp;lt;/div&amp;amp;gt;&amp;amp;lt;/div&amp;amp;gt; 即.grandFather&amp;amp;gt;.fa - 一堆热情 - ShinonomeLab"
+}
+</script>
+
+
+
+    <!-- ### Custom Head ### -->
+    
+</head>
+
+    <body>
+            
+
+            <!-- ### Main content ### -->
+            <!-- ## Header ##-->
+<header>
+    <h1 class="header-title text-center"><a href="/">ShinonomeLab</a></h1>
+
+    <p class="text-center header-slogan">
+        
+            
+                東雲研究所の今日も平和です
+            
+        
+    </p>
+
+    <nav class="navbar-section text-center">
+    
+        <a href="/" class="navbar-link">Home</a>
+    
+    
+        <a href="/archives/" class="navbar-link">Archives</a>
+    
+    
+    
+    
+        <div class="dropdown dropdown-right">
+    <a class="navbar-link dropdown-toggle" tabindex="0">Share</a>
+    <ul class="menu share-menu">
+
+        <!-- Share Weibo -->
+        
+        <li class="menu-item">
+            <a href="http://service.weibo.com/share/share.php?appkey=&title=ShinonomeLab&url=http://yoursite.com&pic=http://yoursite.com/android-chrome-192x192.png&searchPic=false&style=simple" target="_blank" rel="external noopener noreferrer nofollow">Share to Weibo</a>
+        </li>
+        
+
+        <!-- Share Twitter -->
+        
+
+        <!-- Share Facebook -->
+        
+
+        <!-- Share Google+ -->
+        
+        <li class="menu-item">
+            <a href="https://plus.google.com/share?url=http://yoursite.com" target="_blank" rel="external noopener noreferrer nofollow">Share to Google+</a>
+        </li>
+        
+
+        <!-- Share LinkedIn -->
+        
+
+        <!-- Share QQ -->
+        
+        <li class="menu-item">
+            <a href="http://connect.qq.com/widget/shareqq/index.html?site=ShinonomeLab&title=DOM事件机制&summary=&pics=http://yoursite.com/android-chrome-192x192.png&url=http://yoursite.com" target="_blank" rel="external noopener noreferrer nofollow"> Share to QQ</a>
+        </li>
+        
+
+        <!-- Share Telegram -->
+        
+        <li class="menu-item">
+            <a href="https://t.me/share/url?url=http://yoursite.com&text=DOM事件机制" target="_blank" rel="external noopener noreferrer nofollow">Share to Telegram</a>
+        </li>
+        
+
+        <!-- QRCode -->
+        
+
+    </ul>
+</div>
+    
+    
+</nav>
+</header>
+
+            
+    <!-- ## Post ## -->
+    <div class="post-container">
+    <div id="post-card" class="card">
+        
+        <div class="card-item-container">
+            <div class="card-inner-cell">
+                <!-- # Post Header Info # -->
+                <div class="card-header">
+                    
+    <h1 class="card-title h3 mb-2">DOM事件机制</h1>
+
+
+
+
+<div class="post-header-info">
+    <p class="post-header-info-left text-gray">
+        <img class="author-thumb lazyload" data-src="/img/avatar.png" src="/img/suka-lazyload.gif" alt="一堆热情's Avatar">
+        <span>2019-08-20</span>
+        
+        
+        
+    </p>
+    <div class="post-header-info-right">
+        
+            <div class="dropdown dropdown-right">
+<a class="dropdown-toggle" tabindex="0">Share the post</a>
+<ul class="menu share-menu">
+    <!-- Share Weibo -->
+    
+    <li class="menu-item">
+        <a href="http://service.weibo.com/share/share.php?appkey=&title=DOM事件机制&url=http://yoursite.com/2019/08/20/DOM%E4%BA%8B%E4%BB%B6%E6%9C%BA%E5%88%B6/&pic=http://yoursite.com/android-chrome-192x192.png&searchPic=false&style=simple" target="_blank" rel="external noopener noreferrer nofollow">Share to Weibo</a>
+    </li>
+    
+
+    <!-- Share Twitter -->
+    
+
+    <!-- Share Facebook -->
+    
+
+    <!-- Share Google+ -->
+    
+    <li class="menu-item">
+        <a href="https://plus.google.com/share?url=http://yoursite.com/2019/08/20/DOM%E4%BA%8B%E4%BB%B6%E6%9C%BA%E5%88%B6/" target="_blank" rel="external noopener noreferrer nofollow">Share to Google+</a>
+    </li>
+    
+
+    <!-- Share LinkedIn -->
+    
+
+    <!-- Share QQ -->
+    
+    <li class="menu-item">
+        <a href="http://connect.qq.com/widget/shareqq/index.html?site=ShinonomeLab&title=ShinonomeLab&summary=&pics=http://yoursite.com/android-chrome-192x192.png&url=http://yoursite.com/2019/08/20/DOM%E4%BA%8B%E4%BB%B6%E6%9C%BA%E5%88%B6/" target="_blank" rel="external noopener noreferrer nofollow"> Share to QQ</a>
+    </li>
+    
+
+    <!-- Share Telegram -->
+    
+    <li class="menu-item">
+        <a href="https://t.me/share/url?url=http://yoursite.com/2019/08/20/DOM%E4%BA%8B%E4%BB%B6%E6%9C%BA%E5%88%B6/&text=ShinonomeLab" target="_blank" rel="external noopener noreferrer nofollow">Share to Telegram</a>
+    </li>
+    
+
+    <!-- QRCode -->
+    
+
+</ul>
+</div>
+        
+    </div>
+</div>
+                </div>
+                <div class="card-body">
+                    
+                        
+                        
+                            <div id="post-toc"><ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#DOM事件机制"><span class="post-toc-number">1.</span> <span class="post-toc-text">DOM事件机制</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#点击事件"><span class="post-toc-number">2.</span> <span class="post-toc-text">点击事件</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#问：点击了谁"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">问：点击了谁</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#问：调用顺序"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">问：调用顺序</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#2002年，W3C发布标准"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">2002年，W3C发布标准</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#事件捕获"><span class="post-toc-number">3.</span> <span class="post-toc-text">事件捕获</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#示意图"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">示意图</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#事件监听"><span class="post-toc-number">4.</span> <span class="post-toc-text">事件监听</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#事件绑定api"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">事件绑定api</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#如果bool不传或为falsy"><span class="post-toc-number">4.2.</span> <span class="post-toc-text">如果bool不传或为falsy</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#如果bool为true"><span class="post-toc-number">4.3.</span> <span class="post-toc-text">如果bool为true</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#图解"><span class="post-toc-number">4.4.</span> <span class="post-toc-text">图解</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#关于事件函数中的e"><span class="post-toc-number">4.5.</span> <span class="post-toc-text">关于事件函数中的e</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#target-与-currentTarget"><span class="post-toc-number">4.6.</span> <span class="post-toc-text">target 与 currentTarget</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#区别"><span class="post-toc-number">4.6.1.</span> <span class="post-toc-text">区别</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#举例"><span class="post-toc-number">4.6.1.1.</span> <span class="post-toc-text">举例</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#一个特例"><span class="post-toc-number">4.7.</span> <span class="post-toc-text">一个特例</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#背景"><span class="post-toc-number">4.7.1.</span> <span class="post-toc-text">背景</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#代码"><span class="post-toc-number">4.7.2.</span> <span class="post-toc-text">代码</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#取消冒泡"><span class="post-toc-number">4.8.</span> <span class="post-toc-text">取消冒泡</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#捕获不可取消，但冒泡可以"><span class="post-toc-number">4.8.1.</span> <span class="post-toc-text">捕获不可取消，但冒泡可以</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#有些事件不可取消冒泡"><span class="post-toc-number">4.8.2.</span> <span class="post-toc-text">有些事件不可取消冒泡</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#事件委托"><span class="post-toc-number">5.</span> <span class="post-toc-text">事件委托</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#场景一"><span class="post-toc-number">5.0.1.</span> <span class="post-toc-text">场景一</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#场景二"><span class="post-toc-number">5.0.2.</span> <span class="post-toc-text">场景二</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#优点"><span class="post-toc-number">5.0.3.</span> <span class="post-toc-text">优点</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#封装事件委托"><span class="post-toc-number">5.1.</span> <span class="post-toc-text">封装事件委托</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#要求"><span class="post-toc-number">5.1.1.</span> <span class="post-toc-text">要求</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#JS-支持事件吗"><span class="post-toc-number">5.2.</span> <span class="post-toc-text">JS 支持事件吗</span></a></li></ol></li></ol></div>
+                        
+                    
+                    <article id="post-content">
+                        <h1 id="DOM事件机制"><a href="#DOM事件机制" class="headerlink" title="DOM事件机制"></a>DOM事件机制</h1><p>研究DOM事件机制，让我从点击事件开始说起</p>
+<h1 id="点击事件"><a href="#点击事件" class="headerlink" title="点击事件"></a>点击事件</h1><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"grandFather"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"father"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"son"</span>&gt;</span></span><br><span class="line">      谁被点了？</span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>即.grandFather&gt;.father&gt;.son<br>给这三个div分别添加监听 fnGrand / fnFather / fnSon</p>
+<h2 id="问：点击了谁"><a href="#问：点击了谁" class="headerlink" title="问：点击了谁"></a>问：点击了谁</h2><p>点击文字，算不算点击 son ？<br>点击文字，算不算点击 father ？<br>点击文字，算不算点击 grandFather ？<br>答：都算</p>
+<h2 id="问：调用顺序"><a href="#问：调用顺序" class="headerlink" title="问：调用顺序"></a>问：调用顺序</h2><p>点击文字，最先调用 fnGrand / fnFather / fnSon 中哪一个函数？<br>答：都行<br>ie5认为先调用 fnSon，网景认为先调用 fnGrand<br>这时，W3C发布了标准</p>
+<h2 id="2002年，W3C发布标准"><a href="#2002年，W3C发布标准" class="headerlink" title="2002年，W3C发布标准"></a>2002年，W3C发布标准</h2><p>规定浏览器应该同时支持两种调用顺序<br><strong>首先</strong> 按 <strong>爷爷=&gt;爸爸=&gt;儿子</strong> 顺序看有没有函数监听<br><strong>然后</strong> 按 <strong>儿子=&gt;爸爸=&gt;爷爷</strong> 顺序看有没有函数监听<br>有监听函数就调用，并提供事件信息，没有就跳过</p>
+<hr>
+<h1 id="事件捕获"><a href="#事件捕获" class="headerlink" title="事件捕获"></a>事件捕获</h1><p><strong>从外向内 **找监听函数，叫 **事件捕获</strong><br><strong>从内向外 **找监听函数，叫</strong> 事件冒泡**<br>**<br>那岂不是每次点击都要先捕获一次然后再冒泡一次吗？<br>答：开发者自己选择监听函数放在捕获阶段还是冒泡阶段</p>
+<h2 id="示意图"><a href="#示意图" class="headerlink" title="示意图"></a>示意图</h2><p><img src="https://cdn.nlark.com/yuque/0/2020/png/822431/1595431848367-85d6e976-8498-4fc7-8da2-0e839fd72d0a.png#align=left&display=inline&height=661&margin=%5Bobject%20Object%5D&name=image.png&originHeight=661&originWidth=629&size=161840&status=done&style=none&width=629" alt="image.png"></p>
+<hr>
+<h1 id="事件监听"><a href="#事件监听" class="headerlink" title="事件监听"></a>事件监听</h1><h2 id="事件绑定api"><a href="#事件绑定api" class="headerlink" title="事件绑定api"></a>事件绑定api</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">element.addEventListener(eventType, fn, bool)</span><br></pre></td></tr></table></figure>
+<h2 id="如果bool不传或为falsy"><a href="#如果bool不传或为falsy" class="headerlink" title="如果bool不传或为falsy"></a>如果bool不传或为falsy</h2><p>就让fn走冒泡，即当浏览器在冒泡阶段发现当前元素有监听函数，就会调用fn，并提供事件信息</p>
+<h2 id="如果bool为true"><a href="#如果bool为true" class="headerlink" title="如果bool为true"></a>如果bool为true</h2><p>就让fn走捕获，即当浏览器在捕获阶段发现当前元素有监听函数，就会调用fn，并提供事件信息</p>
+<h2 id="图解"><a href="#图解" class="headerlink" title="图解"></a>图解</h2><p><img src="https://cdn.nlark.com/yuque/0/2020/png/822431/1595432609848-8b427803-0187-4fb9-bb94-31e19d68a765.png#align=left&display=inline&height=435&margin=%5Bobject%20Object%5D&name=image.png&originHeight=435&originWidth=618&size=234498&status=done&style=none&width=618" alt="image.png"></p>
+<h2 id="关于事件函数中的e"><a href="#关于事件函数中的e" class="headerlink" title="关于事件函数中的e"></a>关于事件函数中的e</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">son.addEventListener(</span><br><span class="line">  <span class="string">'click'</span>,</span><br><span class="line">  (e) =&gt; &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(e)</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="literal">true</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>简单来说就是指向了当前发生的事件（click、mouseover等等），保存了当前事件的信息。如鼠标点击事件，有鼠标的坐标信息<br>e可加可不加，如果后面需要获取操作信息 就要加e 如果不需要，只是完成一个事件，就可以不加</p>
+<h2 id="target-与-currentTarget"><a href="#target-与-currentTarget" class="headerlink" title="target 与 currentTarget"></a>target 与 currentTarget</h2><h3 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h3><p>e.target - 用户操作的元素<br>e.currentTarget - 程序员监听的元素<br>监听函数中的 this 是 e.currentTarget ，容易分不清</p>
+<h4 id="举例"><a href="#举例" class="headerlink" title="举例"></a>举例</h4><p>div&gt;span{文字}，用户点击文字<br>e.target 就是 span<br>e.currentTarget 就是 div</p>
+<h2 id="一个特例"><a href="#一个特例" class="headerlink" title="一个特例"></a>一个特例</h2><h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>只有一个div被监听 (不考虑父子同时被监听)<br>fn分别在捕获阶段和冒泡阶段监听 click 事件<br>用户点击的元素就是开发者监听的</p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">son.addEventListener(<span class="string">'click'</span>, f1)</span><br><span class="line">son.addEventListener(<span class="string">'click'</span>, f2, <span class="literal">true</span>)</span><br></pre></td></tr></table></figure>
+<p>问，f1先执行还是f2先执行？<br>如果把两行调换位置后，哪个先执行？<br>答：谁先监听谁先执行</p>
+<h2 id="取消冒泡"><a href="#取消冒泡" class="headerlink" title="取消冒泡"></a>取消冒泡</h2><h3 id="捕获不可取消，但冒泡可以"><a href="#捕获不可取消，但冒泡可以" class="headerlink" title="捕获不可取消，但冒泡可以"></a>捕获不可取消，但冒泡可以</h3><p>e.stopPropagation() 可中断冒泡，浏览器不再向上走<br>一般用于封装某些独立组件</p>
+<h3 id="有些事件不可取消冒泡"><a href="#有些事件不可取消冒泡" class="headerlink" title="有些事件不可取消冒泡"></a>有些事件不可取消冒泡</h3><p>MDN搜索event，每个事件都可以看到 Bubbles 和 Cancelable<br>Bubbles 意为该事件是否冒泡<br>Cancelable 意为开发者是否可以取消冒泡<br><img src="https://cdn.nlark.com/yuque/0/2020/png/822431/1595435447109-fd0a8404-2928-4407-a4a3-09def1d40441.png#align=left&display=inline&height=280&margin=%5Bobject%20Object%5D&name=image.png&originHeight=280&originWidth=794&size=35713&status=done&style=none&width=794" alt="image.png"></p>
+<hr>
+<h1 id="事件委托"><a href="#事件委托" class="headerlink" title="事件委托"></a>事件委托</h1><p>子元素委托祖先元素监听这个子元素本该监听的事件</p>
+<h3 id="场景一"><a href="#场景一" class="headerlink" title="场景一"></a>场景一</h3><p>如何给100个按钮添加点击事件<br>答：监听这100个事件的祖先，等冒泡的时候判断 e.target 是不是这100个按钮中的一个</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"div1"</span>&gt;</span></span><br><span class="line">   	<span class="tag">&lt;<span class="name">div</span>&gt;</span>waaagh<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">button</span>&gt;</span>cilck 1<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">button</span>&gt;</span>cilck 2<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">button</span>&gt;</span>cilck 3<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">div</span>&gt;</span>waaagh<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">div</span>&gt;</span>waaagh<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">div</span>&gt;</span>waaagh<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">div</span>&gt;</span>waaagh<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">button</span>&gt;</span>cilck 4<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">button</span>&gt;</span>cilck 5<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">button</span>&gt;</span>cilck 6<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">button</span>&gt;</span>cilck 7<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">button</span>&gt;</span>cilck 8<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">button</span>&gt;</span>cilck 9<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">div1.addEventListener(<span class="string">'click'</span>, (e)=&gt;&#123;</span><br><span class="line">	<span class="keyword">const</span> t = e.target</span><br><span class="line">  <span class="keyword">if</span>(t.tagName.toLowerCase() === <span class="string">'button'</span>) &#123;</span><br><span class="line">  	<span class="built_in">console</span>.log(<span class="string">'button 被点击了'</span>)</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'button内容是'</span> + t.textContent)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="场景二"><a href="#场景二" class="headerlink" title="场景二"></a>场景二</h3><p>如何监听目前不存在的元素的点击事件<br>答：监听祖先，等点击的时候看看是不是想要监听的元素即可</p>
+<h3 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h3><p>省内存<br>可以监听动态元素</p>
+<h2 id="封装事件委托"><a href="#封装事件委托" class="headerlink" title="封装事件委托"></a>封装事件委托</h2><h3 id="要求"><a href="#要求" class="headerlink" title="要求"></a>要求</h3><p>on(‘click’, ‘#div1’, ‘button’, fn)<br>当用户点击#testDiv 里的 li 元素时，调用 fn 函数<br>要求用到事件委托</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">on(<span class="string">'click'</span>, <span class="string">'#div1'</span>, <span class="string">'button'</span>, () =&gt; &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'button 被点击了'</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">//一般默认传来的元素为多个元素，这里没有使用数组遍历</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">on</span>(<span class="params">eventType, element, selector, fn</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (!(element <span class="keyword">instanceof</span> Element)) &#123;</span><br><span class="line">    element = <span class="built_in">document</span>.querySelector(element)</span><br><span class="line">  &#125;</span><br><span class="line">  element.addEventListener(eventType, (e) =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> t = e.target</span><br><span class="line">    <span class="keyword">if</span> (t.matches(selector)) &#123;</span><br><span class="line">      fn(e)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面代码有问题<br>如果此时结构</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"div1"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">span</span>&gt;</span>cilck 1<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>执行 on(‘click’, ‘#div1’, ‘button’, fn)<br>这时点击按钮，e.target 为 span 元素<br>t.matches(selector)为 false</p>
+<p>递归实现<br><a href="https://github.com/FrankFang/wheels/blob/master/lib/dom/index.js#L2" target="_blank" rel="noopener">https://github.com/FrankFang/wheels/blob/master/lib/dom/index.js#L2</a></p>
+<h2 id="JS-支持事件吗"><a href="#JS-支持事件吗" class="headerlink" title="JS 支持事件吗"></a>JS 支持事件吗</h2><p>支持，也不支持<br>DOM事件不属于JS的功能，属于浏览器提供的DOM的功能<br>JS只是调用了DOM提供的addEventListener而已</p>
+
+                    </article>
+                    
+
+
+    <blockquote id="date-expire-notification" class="post-expired-notify">This article was last updated on <span id="date-expire-num"></span> days ago, and the information described in the article may have changed.</blockquote>
+    <script>
+    (function() {
+        var dateUpdate = Date.parse("2020-08-13");
+        var nowDate = new Date();
+        var a = nowDate.getTime();
+        var b = a - dateUpdate;
+        var daysUpdateExpire = Math.floor(b/(24*3600*1000));
+        if (daysUpdateExpire >= 120) {
+            document.getElementById('date-expire-num').innerHTML = daysUpdateExpire;
+        } else {
+            document.getElementById('date-expire-notification').style.display = 'none';
+        }
+    })();
+    </script>
+
+
+<p class="post-footer-info mb-0 pt-0">Published at&nbsp;<time datetime="2019-08-19T16:00:00.000Z" itemprop="datePublished">2019-08-20</time>
+
+    , Updated at&nbsp;<time datetime="2020-08-13T09:53:59.262Z" itemprop="dateModified">2020-08-13</time>
+
+</p>
+<p class="post-footer-info mb-0 pt-2">
+
+
+
+<span class="post-tags-list mt-2">
+
+<a class="post-tags-list-item" href="/tags/dom/" rel="tag">#&nbsp;dom</a>
+
+</span>
+
+
+</p>
+
+                </div>
+                <div class="post-nav px-2 bg-gray">
+<ul class="pagination">
+    <!-- Prev Nav -->
+    
+        <li class="page-item page-prev">
+            <a href="/2020/05/17/%E6%B5%85%E6%9E%90%20MVC/" rel="prev">
+                <div class="page-item-title"><i class="icon icon-back" aria-hidden="true"></i></div>
+                <div class="page-item-subtitle">浅析MVC</div>
+            </a>
+        </li>
+    
+
+    <!-- Next Nav -->
+    
+        <li class="page-item page-next">
+            <a href="/2019/07/26/JS%E5%87%BD%E6%95%B0%E6%89%A7%E8%A1%8C%E6%97%B6%E6%9C%BA/" rel="next">
+                <div class="page-item-title"><i class="icon icon-forward" aria-hidden="true"></i></div>
+                <div class="page-item-subtitle">JS函数执行时机</div>
+            </a>
+        </li>
+    
+</ul>
+</div>
+
+                
+                    <!-- # Comment # -->
+                    
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+            <!-- ### Footer ### -->
+            <footer class="text-center">
+    <!-- footer copyright -->
+    
+        <p class="footer-copyright mb-0">Copyright&nbsp;©&nbsp;<span id="copyright-year"></span>
+            <a class="footer-copyright-a" href="http://yoursite.com">ShinonomeLab</a>
+        </p>
+
+    <!-- footer custom text -->
+    <p class="footer-text mb-0">
+    
+    </p>
+    <!-- footer develop info -->
+    <p class="footer-develop mb-0">
+        
+
+        
+        Powered by&nbsp;<!--
+         --><a href="https://hexo.io" target="_blank" class="footer-develop-a" rel="external nofollow noopener noreferrer">Hexo</a><span class="footer-develop-divider"></span>Theme&nbsp;-&nbsp;<!--
+         --><a href="https://github.com/SukkaW/hexo-theme-suka" target="_blank" class="footer-develop-a" rel="external noopener">Suka</a>
+    </p>
+</footer>
+
+
+        <!-- ### Import File ### -->
+        <!-- ### Footer JS Import ### -->
+
+<script>
+
+    
+window.lazyLoadOptions = {
+    elements_selector: ".lazyload",
+    threshold: 50
+};
+
+(function() {
+    var copyrightNow = new Date().getFullYear();
+    var copyrightContent = document.getElementById('copyright-year');
+    var copyrightSince = 2019;
+    if (copyrightSince === copyrightNow) {
+        copyrightContent.textContent = copyrightNow;
+    } else {
+        copyrightContent.textContent = copyrightSince + ' - ' + copyrightNow;
+    }
+})();
+console.log('\n %c Suka Theme (hexo-theme-suka) | © SukkaW | Verision 1.3.3 %c https://github.com/SukkaW/hexo-theme-suka \n', 'color: #fff; background: #444; padding:5px 0;', 'background: #bbb; padding:5px 0;');
+
+</script>
+
+<script src="/lib/vanilla-lazyload/lazyload.min.js" async></script>
+
+
+
+<!-- Comment -->
+
+
+<!-- ### Custom Footer ### -->
+
+    </body>
+
+</html>

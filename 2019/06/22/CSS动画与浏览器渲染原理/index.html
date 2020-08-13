@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+
+<html lang="zh-Hans">
+    <head>
+    <meta charset="utf-8">
+    <!--
+        hexo-theme-suka © SukkaW
+        GitHub: https://github.com/SukkaW/hexo-theme-suka
+    -->
+
+    <!-- ### Resource Hint ### -->
+
+    <!-- ## DNS Prefetch ## -->
+    <meta http-equiv="x-dns-prefetch-control" content="on">
+
+<!-- busuanzi -->
+
+
+<!-- comment -->
+
+
+
+
+
+
+
+<!-- analytics -->
+
+
+
+
+
+
+
+    <!-- ## Preload ## -->
+    
+
+
+
+
+    <!-- ### Meta & Title & Info ### -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, maximum-scale=5, viewport-fit=cover">
+    <meta name="renderer" content="webkit">
+
+    <!-- Title -->
+    <title>CSS动画与浏览器渲染原理 | ShinonomeLab</title>
+
+    <!-- Favicons -->
+    <link rel="icon" type="image&#x2F;ico" href="/img/favicon.ico"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="icon" typt="image&#x2F;png" sizes="192x192" href="/android-chrome-192x192.png"><link rel="icon" typt="image&#x2F;png" sizes="32x32" href="/img/favicon-32x32.png"><link rel="icon" typt="image&#x2F;png" sizes="16x16" href="/img/favicon-16x16.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="">
+
+    <!-- ### Import File ### -->
+    <link rel="stylesheet" href="/lib/spectre/spectre.min.css"><style>
+    body {
+        background-color: #f8f9fa;
+    }
+
+    a, a:visited {
+        color: #0070ff;
+    }
+
+    a:active, a:focus, a:hover {
+        color: #0070ff;
+        opacity: .75;
+    }
+
+    #post-content a,
+    #post-content a:hover,
+    #post-content a:focus,
+    #post-content a:visited {
+        color: #005eb9;
+        opacity: 1;
+    }
+
+    
+
+    .post-entry .card-body a {
+        color: #0070ff;
+    }
+
+    .avatar {
+        background: #444;
+    }
+
+    .navbar-link,
+    .navbar-link:visited,
+    .timeline .timeline-item .timeline-icon.icon-lg {
+        color: #0070ff;
+    }
+
+    .navbar-link:hover {
+        color: #0070ff;
+        opacity: .8;
+    }
+
+    #search-input .btn,
+    #disqus_click_btn,
+    #disqus-switch-to-direct,
+    #disqus-loadmore-button {
+        background: #727e96;
+        border-color: #727e96;
+        color: #fff;
+    }
+
+    #post-toc a.post-toc-link,
+    #post-toc a.post-toc-link:visited,
+    .share-menu.menu .menu-item>a {
+        color: #727e96;
+    }
+
+    .share-menu.menu .menu-item>a:hover,
+    .share-menu.menu .menu-item>a:focus,
+    .share-menu.menu .menu-item>a:visited {
+        color: #50596c;
+        background: #f8f9fa;
+        opacity: .85;
+    }
+</style><link rel="stylesheet" href="/css/style.min.css">
+
+
+
+
+
+
+
+
+    <!-- Prettify Theme -->
+    
+    <link rel="preload" href="/css/highlight/github.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="/css/highlight/github.min.css"></noscript>
+
+
+
+
+
+<script>
+/*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+!function(t){"use strict";t.loadCSS||(t.loadCSS=function(){});var e=loadCSS.relpreload={};if(e.support=function(){var e;try{e=t.document.createElement("link").relList.supports("preload")}catch(t){e=!1}return function(){return e}}(),e.bindMediaToggle=function(t){var e=t.media||"all";function a(){t.addEventListener?t.removeEventListener("load",a):t.attachEvent&&t.detachEvent("onload",a),t.setAttribute("onload",null),t.media=e}t.addEventListener?t.addEventListener("load",a):t.attachEvent&&t.attachEvent("onload",a),setTimeout(function(){t.rel="stylesheet",t.media="only x"}),setTimeout(a,3e3)},e.poly=function(){if(!e.support())for(var a=t.document.getElementsByTagName("link"),n=0;n<a.length;n++){var o=a[n];"preload"!==o.rel||"style"!==o.getAttribute("as")||o.getAttribute("data-loadcss")||(o.setAttribute("data-loadcss",!0),e.bindMediaToggle(o))}},!e.support()){e.poly();var a=t.setInterval(e.poly,500);t.addEventListener?t.addEventListener("load",function(){e.poly(),t.clearInterval(a)}):t.attachEvent&&t.attachEvent("onload",function(){e.poly(),t.clearInterval(a)})}"undefined"!=typeof exports?exports.loadCSS=loadCSS:t.loadCSS=loadCSS}("undefined"!=typeof global?global:this);
+</script>
+
+    <!-- ### Site Verification ### -->
+    
+
+
+    <meta name="mobile-web-app-capable" content="yes"><meta name="application-name" content="ShinonomeLab"><meta name="msapplication-starturl" content="http://yoursite.com"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="ShinonomeLab"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <!-- ### The Open Graph & Twitter Card Protocol ### -->
+    <meta property="og:title" content="CSS动画与浏览器渲染原理 | ShinonomeLab"><meta property="og:site_name" content="ShinonomeLab"><meta property="og:type" content="article"><meta property="og:url" content="http://yoursite.com/2019/06/22/CSS%E5%8A%A8%E7%94%BB%E4%B8%8E%E6%B5%8F%E8%A7%88%E5%99%A8%E6%B8%B2%E6%9F%93%E5%8E%9F%E7%90%86/"><meta property="og:locale" content="zh-Hans"><meta name="description" content="CSS动画与浏览器渲染原理最简单的动画例子将div从左往右移动利用定时器每过一段时间增加left数值使div看起来向左移动 http:&#x2F;&#x2F;js.jirengu.com&#x2F;bagow&#x2F;1&#x2F;edit?html,js,output 可以打开开发者工具看下这个动画的性能打开开发者工具，按esc，选择Rendering，然后勾选第一个选项，这时浏览器画面每变绿一次就说明重新绘制了一次 这是再点开上图例子，利用 - 一堆热情 - ShinonomeLab"><meta name="keywords" content="css"><meta property="og:image" content="https://cdn.nlark.com/yuque/0/2020/png/822431/1594736151492-7ea1fb91-ac31-490a-a776-b1836f7c28f4.png#align=left&display=inline&height=510&margin=%5Bobject%20Object%5D&name=image.png&originHeight=510&originWidth=611&size=27501&status=done&style=none&width=611"><meta property="og:image" content="https://cdn.nlark.com/yuque/0/2020/png/822431/1594736192820-0d910574-bb4b-45c6-a086-5793b7fa0018.png#align=left&display=inline&height=305&margin=%5Bobject%20Object%5D&name=image.png&originHeight=305&originWidth=410&size=22543&status=done&style=none&width=410"><meta property="og:image" content="https://cdn.nlark.com/yuque/0/2020/gif/822431/1594736385510-7c4cc71d-72ef-42e4-af3f-3b57a48119fa.gif#align=left&display=inline&height=282&margin=%5Bobject%20Object%5D&name=left.gif&originHeight=282&originWidth=539&size=52485&status=done&style=none&width=539"><meta property="og:image" content="https://cdn.nlark.com/yuque/0/2020/gif/822431/1594738610676-188ee0a3-1f1a-4669-bbe8-345c33b70473.gif#align=left&display=inline&height=282&margin=%5Bobject%20Object%5D&name=trans.gif&originHeight=282&originWidth=539&size=43650&status=done&style=none&width=539"><meta property="og:image" content="https://cdn.nlark.com/yuque/0/2020/png/822431/1594739115541-f494fb8c-69a6-4a62-b049-3c696b54c5c9.png#align=left&display=inline&height=449&margin=%5Bobject%20Object%5D&name=image.png&originHeight=449&originWidth=960&size=367735&status=done&style=none&width=960"><meta property="og:image" content="https://cdn.nlark.com/yuque/0/2020/png/822431/1594739242329-753bce41-9788-4b14-990b-9d36f4f9f99d.png#align=left&display=inline&height=564&margin=%5Bobject%20Object%5D&name=image.png&originHeight=564&originWidth=806&size=360581&status=done&style=none&width=806"><meta property="article:published_time" content="2019-06-21T16:00:00.000Z"><meta property="article:modified_time" content="2020-08-13T09:53:45.507Z"><meta property="og:updated_time" content="2020-08-13T09:53:45.507Z"><meta property="article:author" content="一堆热情"><meta property="article:tag" content="css"><meta name="twitter:card" content="summary">
+
+    
+
+    <!-- ### Canonical link ### -->
+    <link rel="canonical" href="http://yoursite.com/2019/06/22/CSS%E5%8A%A8%E7%94%BB%E4%B8%8E%E6%B5%8F%E8%A7%88%E5%99%A8%E6%B8%B2%E6%9F%93%E5%8E%9F%E7%90%86/">
+
+    <meta name="generator" content="Hexo 4.2.1">
+
+    <!-- ### Analytics ### -->
+    
+
+
+
+
+
+
+
+    <!-- ### Structured Data ### -->
+    
+
+
+
+<script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "url": "http://yoursite.com/2019/06/22/CSS%E5%8A%A8%E7%94%BB%E4%B8%8E%E6%B5%8F%E8%A7%88%E5%99%A8%E6%B8%B2%E6%9F%93%E5%8E%9F%E7%90%86/",
+    "@type": "BlogPosting",
+    "logo": "http://yoursite.com/android-chrome-192x192.png",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "http://yoursite.com/2019/06/22/CSS%E5%8A%A8%E7%94%BB%E4%B8%8E%E6%B5%8F%E8%A7%88%E5%99%A8%E6%B8%B2%E6%9F%93%E5%8E%9F%E7%90%86/"
+    },
+    "headline": "CSS动画与浏览器渲染原理 | ShinonomeLab",
+    
+    "image": {
+        "@type": "ImageObject",
+        "url": "http://yoursite.com/android-chrome-192x192.png"
+    },
+    
+    "datePublished": "2019-06-21T16:00:00.000Z",
+    "dateModified": "2020-08-13T09:53:45.507Z",
+    "author": {
+        "@type": "Person",
+        "name": "一堆热情",
+        "image": {
+            "@type": "ImageObject",
+            "url": "http://yoursite.com/img/avatar.png"
+        },
+        "description": "東雲研究所の今日も平和です"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "ShinonomeLab",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "http://yoursite.com/android-chrome-192x192.png"
+        }
+    },
+    
+    "potentialAction": {
+        "@type": "SearchAction",
+        "target": "http://yoursite.com/search?s={search_term_string}",
+        "query-input": "required name=search_term_string"
+    },
+    
+    "keywords": "css",
+    "description": "CSS动画与浏览器渲染原理最简单的动画例子将div从左往右移动利用定时器每过一段时间增加left数值使div看起来向左移动 http://js.jirengu.com/bagow/1/edit?html,js,output 可以打开开发者工具看下这个动画的性能打开开发者工具，按esc，选择Rendering，然后勾选第一个选项，这时浏览器画面每变绿一次就说明重新绘制了一次 这是再点开上图例子，利用 - 一堆热情 - ShinonomeLab"
+}
+</script>
+
+
+
+    <!-- ### Custom Head ### -->
+    
+</head>
+
+    <body>
+            
+
+            <!-- ### Main content ### -->
+            <!-- ## Header ##-->
+<header>
+    <h1 class="header-title text-center"><a href="/">ShinonomeLab</a></h1>
+
+    <p class="text-center header-slogan">
+        
+            
+                東雲研究所の今日も平和です
+            
+        
+    </p>
+
+    <nav class="navbar-section text-center">
+    
+        <a href="/" class="navbar-link">Home</a>
+    
+    
+        <a href="/archives/" class="navbar-link">Archives</a>
+    
+    
+    
+    
+        <div class="dropdown dropdown-right">
+    <a class="navbar-link dropdown-toggle" tabindex="0">Share</a>
+    <ul class="menu share-menu">
+
+        <!-- Share Weibo -->
+        
+        <li class="menu-item">
+            <a href="http://service.weibo.com/share/share.php?appkey=&title=ShinonomeLab&url=http://yoursite.com&pic=http://yoursite.com/android-chrome-192x192.png&searchPic=false&style=simple" target="_blank" rel="external noopener noreferrer nofollow">Share to Weibo</a>
+        </li>
+        
+
+        <!-- Share Twitter -->
+        
+
+        <!-- Share Facebook -->
+        
+
+        <!-- Share Google+ -->
+        
+        <li class="menu-item">
+            <a href="https://plus.google.com/share?url=http://yoursite.com" target="_blank" rel="external noopener noreferrer nofollow">Share to Google+</a>
+        </li>
+        
+
+        <!-- Share LinkedIn -->
+        
+
+        <!-- Share QQ -->
+        
+        <li class="menu-item">
+            <a href="http://connect.qq.com/widget/shareqq/index.html?site=ShinonomeLab&title=CSS动画与浏览器渲染原理&summary=&pics=http://yoursite.com/android-chrome-192x192.png&url=http://yoursite.com" target="_blank" rel="external noopener noreferrer nofollow"> Share to QQ</a>
+        </li>
+        
+
+        <!-- Share Telegram -->
+        
+        <li class="menu-item">
+            <a href="https://t.me/share/url?url=http://yoursite.com&text=CSS动画与浏览器渲染原理" target="_blank" rel="external noopener noreferrer nofollow">Share to Telegram</a>
+        </li>
+        
+
+        <!-- QRCode -->
+        
+
+    </ul>
+</div>
+    
+    
+</nav>
+</header>
+
+            
+    <!-- ## Post ## -->
+    <div class="post-container">
+    <div id="post-card" class="card">
+        
+        <div class="card-item-container">
+            <div class="card-inner-cell">
+                <!-- # Post Header Info # -->
+                <div class="card-header">
+                    
+    <h1 class="card-title h3 mb-2">CSS动画与浏览器渲染原理</h1>
+
+
+
+
+<div class="post-header-info">
+    <p class="post-header-info-left text-gray">
+        <img class="author-thumb lazyload" data-src="/img/avatar.png" src="/img/suka-lazyload.gif" alt="一堆热情's Avatar">
+        <span>2019-06-22</span>
+        
+        
+        
+    </p>
+    <div class="post-header-info-right">
+        
+            <div class="dropdown dropdown-right">
+<a class="dropdown-toggle" tabindex="0">Share the post</a>
+<ul class="menu share-menu">
+    <!-- Share Weibo -->
+    
+    <li class="menu-item">
+        <a href="http://service.weibo.com/share/share.php?appkey=&title=CSS动画与浏览器渲染原理&url=http://yoursite.com/2019/06/22/CSS%E5%8A%A8%E7%94%BB%E4%B8%8E%E6%B5%8F%E8%A7%88%E5%99%A8%E6%B8%B2%E6%9F%93%E5%8E%9F%E7%90%86/&pic=http://yoursite.com/android-chrome-192x192.png&searchPic=false&style=simple" target="_blank" rel="external noopener noreferrer nofollow">Share to Weibo</a>
+    </li>
+    
+
+    <!-- Share Twitter -->
+    
+
+    <!-- Share Facebook -->
+    
+
+    <!-- Share Google+ -->
+    
+    <li class="menu-item">
+        <a href="https://plus.google.com/share?url=http://yoursite.com/2019/06/22/CSS%E5%8A%A8%E7%94%BB%E4%B8%8E%E6%B5%8F%E8%A7%88%E5%99%A8%E6%B8%B2%E6%9F%93%E5%8E%9F%E7%90%86/" target="_blank" rel="external noopener noreferrer nofollow">Share to Google+</a>
+    </li>
+    
+
+    <!-- Share LinkedIn -->
+    
+
+    <!-- Share QQ -->
+    
+    <li class="menu-item">
+        <a href="http://connect.qq.com/widget/shareqq/index.html?site=ShinonomeLab&title=ShinonomeLab&summary=&pics=http://yoursite.com/android-chrome-192x192.png&url=http://yoursite.com/2019/06/22/CSS%E5%8A%A8%E7%94%BB%E4%B8%8E%E6%B5%8F%E8%A7%88%E5%99%A8%E6%B8%B2%E6%9F%93%E5%8E%9F%E7%90%86/" target="_blank" rel="external noopener noreferrer nofollow"> Share to QQ</a>
+    </li>
+    
+
+    <!-- Share Telegram -->
+    
+    <li class="menu-item">
+        <a href="https://t.me/share/url?url=http://yoursite.com/2019/06/22/CSS%E5%8A%A8%E7%94%BB%E4%B8%8E%E6%B5%8F%E8%A7%88%E5%99%A8%E6%B8%B2%E6%9F%93%E5%8E%9F%E7%90%86/&text=ShinonomeLab" target="_blank" rel="external noopener noreferrer nofollow">Share to Telegram</a>
+    </li>
+    
+
+    <!-- QRCode -->
+    
+
+</ul>
+</div>
+        
+    </div>
+</div>
+                </div>
+                <div class="card-body">
+                    
+                        
+                        
+                            <div id="post-toc"><ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#CSS动画与浏览器渲染原理"><span class="post-toc-number">1.</span> <span class="post-toc-text">CSS动画与浏览器渲染原理</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#最简单的动画例子"><span class="post-toc-number">2.</span> <span class="post-toc-text">最简单的动画例子</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#试试transform-变形"><span class="post-toc-number">3.</span> <span class="post-toc-text">试试transform(变形)</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#浏览器渲染原理"><span class="post-toc-number">4.</span> <span class="post-toc-text">浏览器渲染原理</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#浏览器渲染过程"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">浏览器渲染过程</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#三棵树"><span class="post-toc-number">4.2.</span> <span class="post-toc-text">三棵树</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#三种更新方式"><span class="post-toc-number">4.3.</span> <span class="post-toc-text">三种更新方式</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#如何查看每个属性触发什么流程"><span class="post-toc-number">4.4.</span> <span class="post-toc-text">如何查看每个属性触发什么流程</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#transform和transition一些经验"><span class="post-toc-number">5.</span> <span class="post-toc-text">transform和transition一些经验</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#transform四个常用功能"><span class="post-toc-number">5.1.</span> <span class="post-toc-text">transform四个常用功能</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#transition-过渡"><span class="post-toc-number">5.2.</span> <span class="post-toc-text">transition 过渡</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#animation"><span class="post-toc-number">6.</span> <span class="post-toc-text">animation</span></a></li></ol></div>
+                        
+                    
+                    <article id="post-content">
+                        <h1 id="CSS动画与浏览器渲染原理"><a href="#CSS动画与浏览器渲染原理" class="headerlink" title="CSS动画与浏览器渲染原理"></a>CSS动画与浏览器渲染原理</h1><h1 id="最简单的动画例子"><a href="#最简单的动画例子" class="headerlink" title="最简单的动画例子"></a>最简单的动画例子</h1><p>将div从左往右移动<br>利用定时器每过一段时间增加left数值使div看起来向左移动</p>
+<p><a href="http://js.jirengu.com/bagow/1/edit?html,js,output" target="_blank" rel="noopener">http://js.jirengu.com/bagow/1/edit?html,js,output</a></p>
+<p>可以打开开发者工具看下这个动画的性能<br>打开开发者工具，按esc，选择Rendering，然后勾选第一个选项，这时浏览器画面每变绿一次就说明重新绘制了一次<br><img src="https://cdn.nlark.com/yuque/0/2020/png/822431/1594736151492-7ea1fb91-ac31-490a-a776-b1836f7c28f4.png#align=left&display=inline&height=510&margin=%5Bobject%20Object%5D&name=image.png&originHeight=510&originWidth=611&size=27501&status=done&style=none&width=611" alt="image.png"><br><img src="https://cdn.nlark.com/yuque/0/2020/png/822431/1594736192820-0d910574-bb4b-45c6-a086-5793b7fa0018.png#align=left&display=inline&height=305&margin=%5Bobject%20Object%5D&name=image.png&originHeight=305&originWidth=410&size=22543&status=done&style=none&width=410" alt="image.png"></p>
+<p>这是再点开上图例子，利用开发者工具就可以看出，浏览器在一直不停重新绘制图形</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2020/gif/822431/1594736385510-7c4cc71d-72ef-42e4-af3f-3b57a48119fa.gif#align=left&display=inline&height=282&margin=%5Bobject%20Object%5D&name=left.gif&originHeight=282&originWidth=539&size=52485&status=done&style=none&width=539" alt="left.gif"></p>
+<h1 id="试试transform-变形"><a href="#试试transform-变形" class="headerlink" title="试试transform(变形)"></a>试试transform(变形)</h1><p><a href="http://js.jirengu.com/lojiz/1/edit?html,css,js,output" target="_blank" rel="noopener">http://js.jirengu.com/lojiz/1/edit?html,css,js,output</a></p>
+<p>原理<br>transform: translateX(300px);<br>向X轴平移300px<br>transition会自动补充中间缺失的帧</p>
+<p>这时我们可以打开开发者工具看下transform的渲染性能<br><img src="https://cdn.nlark.com/yuque/0/2020/gif/822431/1594738610676-188ee0a3-1f1a-4669-bbe8-345c33b70473.gif#align=left&display=inline&height=282&margin=%5Bobject%20Object%5D&name=trans.gif&originHeight=282&originWidth=539&size=43650&status=done&style=none&width=539" alt="trans.gif"><br>可以看到只有开始和结束进行了绘制<br>现在我们来深入了解下浏览器渲染原理吧</p>
+<h1 id="浏览器渲染原理"><a href="#浏览器渲染原理" class="headerlink" title="浏览器渲染原理"></a>浏览器渲染原理</h1><p>可以看下google团队写的文章<br><a href="https://developers.google.com/web/fundamentals/performance/critical-rendering-path/render-tree-construction" target="_blank" rel="noopener">渲染树构建、布局及绘制</a><br><a href="https://developers.google.com/web/fundamentals/performance/rendering/" target="_blank" rel="noopener">渲染性能</a></p>
+<h2 id="浏览器渲染过程"><a href="#浏览器渲染过程" class="headerlink" title="浏览器渲染过程"></a>浏览器渲染过程</h2><ol>
+<li>根据HTML构建HTML树(DOM)</li>
+<li>根据CSS构建CSS树(CSSOM)</li>
+<li>将两棵树合并成一颗渲染树(render tree)</li>
+<li>Layout布局(文档流、盒模型、计算大小和位置)</li>
+<li>Paint绘制(把边框颜色、文字颜色、阴影等画出来)</li>
+<li>Compose合成(根据层叠关系展示画面)</li>
+</ol>
+<h2 id="三棵树"><a href="#三棵树" class="headerlink" title="三棵树"></a>三棵树</h2><p><img src="https://cdn.nlark.com/yuque/0/2020/png/822431/1594739115541-f494fb8c-69a6-4a62-b049-3c696b54c5c9.png#align=left&display=inline&height=449&margin=%5Bobject%20Object%5D&name=image.png&originHeight=449&originWidth=960&size=367735&status=done&style=none&width=960" alt="image.png"></p>
+<h2 id="三种更新方式"><a href="#三种更新方式" class="headerlink" title="三种更新方式"></a>三种更新方式</h2><p><img src="https://cdn.nlark.com/yuque/0/2020/png/822431/1594739242329-753bce41-9788-4b14-990b-9d36f4f9f99d.png#align=left&display=inline&height=564&margin=%5Bobject%20Object%5D&name=image.png&originHeight=564&originWidth=806&size=360581&status=done&style=none&width=806" alt="image.png"><br>第一种，全部流程走一遍<br>例: div.remove() 会触发当前div消失，其他元素relayout<br>第二种，跳过layout<br>例: 改变背景颜色，不改变当前布局，直接repaint+composite<br>第三种，跳过layout和paint<br>例: 改变transform，只需composite</p>
+<h2 id="如何查看每个属性触发什么流程"><a href="#如何查看每个属性触发什么流程" class="headerlink" title="如何查看每个属性触发什么流程"></a>如何查看每个属性触发什么流程</h2><p><a href="https://csstriggers.com/" target="_blank" rel="noopener">https://csstriggers.com/</a></p>
+<h1 id="transform和transition一些经验"><a href="#transform和transition一些经验" class="headerlink" title="transform和transition一些经验"></a>transform和transition一些经验</h1><h2 id="transform四个常用功能"><a href="#transform四个常用功能" class="headerlink" title="transform四个常用功能"></a>transform四个常用功能</h2><p>位移 translate<br>缩放 scale<br>旋转 rotate<br>倾斜 skew</p>
+<p>一般都需要配合transition过度<br>inline元素不支持transform，需要先变成block</p>
+<p>translate<br>left: 50%; top: 50%;<br>transform: translate(-50%. -50%);<br>绝对定位元素居中的完美答案</p>
+<p>scale<br>用的较少，容易出现模糊</p>
+<p>rotate<br>一般用于360度旋转制作loading</p>
+<h2 id="transition-过渡"><a href="#transition-过渡" class="headerlink" title="transition 过渡"></a>transition 过渡</h2><p>作用：补充中间帧</p>
+<p>并不是所有属性都能过度display: none =&gt;block没法过渡<br>一般改成visibility: hidden=&gt;visible<br>display和visibility的区别<br><a href="https://segmentfault.com/a/1190000015116392" target="_blank" rel="noopener">https://segmentfault.com/a/1190000015116392</a><br>凡是可以有规律渐变的一般都能过渡<br>如background的颜色 000=&gt;fff<br>   opacity 0.1=&gt;0.9</p>
+<p>过度必须要有起始</p>
+<h1 id="animation"><a href="#animation" class="headerlink" title="animation"></a>animation</h1><p>缩写语法<br>animation: 时长|过渡方式|延迟|次数|方向|填充模式|是否暂停|动画名;</p>
+<p>例: <a href="http://js.jirengu.com/jufigahaqe/1/edit" target="_blank" rel="noopener">跳动的心</a></p>
+
+                    </article>
+                    
+
+
+    <blockquote id="date-expire-notification" class="post-expired-notify">This article was last updated on <span id="date-expire-num"></span> days ago, and the information described in the article may have changed.</blockquote>
+    <script>
+    (function() {
+        var dateUpdate = Date.parse("2020-08-13");
+        var nowDate = new Date();
+        var a = nowDate.getTime();
+        var b = a - dateUpdate;
+        var daysUpdateExpire = Math.floor(b/(24*3600*1000));
+        if (daysUpdateExpire >= 120) {
+            document.getElementById('date-expire-num').innerHTML = daysUpdateExpire;
+        } else {
+            document.getElementById('date-expire-notification').style.display = 'none';
+        }
+    })();
+    </script>
+
+
+<p class="post-footer-info mb-0 pt-0">Published at&nbsp;<time datetime="2019-06-21T16:00:00.000Z" itemprop="datePublished">2019-06-22</time>
+
+    , Updated at&nbsp;<time datetime="2020-08-13T09:53:45.507Z" itemprop="dateModified">2020-08-13</time>
+
+</p>
+<p class="post-footer-info mb-0 pt-2">
+
+
+
+<span class="post-tags-list mt-2">
+
+<a class="post-tags-list-item" href="/tags/css/" rel="tag">#&nbsp;css</a>
+
+</span>
+
+
+</p>
+
+                </div>
+                <div class="post-nav px-2 bg-gray">
+<ul class="pagination">
+    <!-- Prev Nav -->
+    
+        <li class="page-item page-prev">
+            <a href="/2019/07/03/JS%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B(%E7%AE%80%E5%8D%95%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B)/" rel="prev">
+                <div class="page-item-title"><i class="icon icon-back" aria-hidden="true"></i></div>
+                <div class="page-item-subtitle">JS数据类型（简单数据类型）</div>
+            </a>
+        </li>
+    
+
+    <!-- Next Nav -->
+    
+        <li class="page-item page-next">
+            <a href="/2019/06/18/CSS%E5%AE%9A%E4%BD%8D/" rel="next">
+                <div class="page-item-title"><i class="icon icon-forward" aria-hidden="true"></i></div>
+                <div class="page-item-subtitle">CSS定位</div>
+            </a>
+        </li>
+    
+</ul>
+</div>
+
+                
+                    <!-- # Comment # -->
+                    
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+            <!-- ### Footer ### -->
+            <footer class="text-center">
+    <!-- footer copyright -->
+    
+        <p class="footer-copyright mb-0">Copyright&nbsp;©&nbsp;<span id="copyright-year"></span>
+            <a class="footer-copyright-a" href="http://yoursite.com">ShinonomeLab</a>
+        </p>
+
+    <!-- footer custom text -->
+    <p class="footer-text mb-0">
+    
+    </p>
+    <!-- footer develop info -->
+    <p class="footer-develop mb-0">
+        
+
+        
+        Powered by&nbsp;<!--
+         --><a href="https://hexo.io" target="_blank" class="footer-develop-a" rel="external nofollow noopener noreferrer">Hexo</a><span class="footer-develop-divider"></span>Theme&nbsp;-&nbsp;<!--
+         --><a href="https://github.com/SukkaW/hexo-theme-suka" target="_blank" class="footer-develop-a" rel="external noopener">Suka</a>
+    </p>
+</footer>
+
+
+        <!-- ### Import File ### -->
+        <!-- ### Footer JS Import ### -->
+
+<script>
+
+    
+window.lazyLoadOptions = {
+    elements_selector: ".lazyload",
+    threshold: 50
+};
+
+(function() {
+    var copyrightNow = new Date().getFullYear();
+    var copyrightContent = document.getElementById('copyright-year');
+    var copyrightSince = 2019;
+    if (copyrightSince === copyrightNow) {
+        copyrightContent.textContent = copyrightNow;
+    } else {
+        copyrightContent.textContent = copyrightSince + ' - ' + copyrightNow;
+    }
+})();
+console.log('\n %c Suka Theme (hexo-theme-suka) | © SukkaW | Verision 1.3.3 %c https://github.com/SukkaW/hexo-theme-suka \n', 'color: #fff; background: #444; padding:5px 0;', 'background: #bbb; padding:5px 0;');
+
+</script>
+
+<script src="/lib/vanilla-lazyload/lazyload.min.js" async></script>
+
+
+
+<!-- Comment -->
+
+
+<!-- ### Custom Footer ### -->
+
+    </body>
+
+</html>

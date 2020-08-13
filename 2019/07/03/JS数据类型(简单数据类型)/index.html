@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+
+<html lang="zh-Hans">
+    <head>
+    <meta charset="utf-8">
+    <!--
+        hexo-theme-suka © SukkaW
+        GitHub: https://github.com/SukkaW/hexo-theme-suka
+    -->
+
+    <!-- ### Resource Hint ### -->
+
+    <!-- ## DNS Prefetch ## -->
+    <meta http-equiv="x-dns-prefetch-control" content="on">
+
+<!-- busuanzi -->
+
+
+<!-- comment -->
+
+
+
+
+
+
+
+<!-- analytics -->
+
+
+
+
+
+
+
+    <!-- ## Preload ## -->
+    
+
+
+
+
+    <!-- ### Meta & Title & Info ### -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, maximum-scale=5, viewport-fit=cover">
+    <meta name="renderer" content="webkit">
+
+    <!-- Title -->
+    <title>JS数据类型（简单数据类型） | ShinonomeLab</title>
+
+    <!-- Favicons -->
+    <link rel="icon" type="image&#x2F;ico" href="/img/favicon.ico"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="icon" typt="image&#x2F;png" sizes="192x192" href="/android-chrome-192x192.png"><link rel="icon" typt="image&#x2F;png" sizes="32x32" href="/img/favicon-32x32.png"><link rel="icon" typt="image&#x2F;png" sizes="16x16" href="/img/favicon-16x16.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="">
+
+    <!-- ### Import File ### -->
+    <link rel="stylesheet" href="/lib/spectre/spectre.min.css"><style>
+    body {
+        background-color: #f8f9fa;
+    }
+
+    a, a:visited {
+        color: #0070ff;
+    }
+
+    a:active, a:focus, a:hover {
+        color: #0070ff;
+        opacity: .75;
+    }
+
+    #post-content a,
+    #post-content a:hover,
+    #post-content a:focus,
+    #post-content a:visited {
+        color: #005eb9;
+        opacity: 1;
+    }
+
+    
+
+    .post-entry .card-body a {
+        color: #0070ff;
+    }
+
+    .avatar {
+        background: #444;
+    }
+
+    .navbar-link,
+    .navbar-link:visited,
+    .timeline .timeline-item .timeline-icon.icon-lg {
+        color: #0070ff;
+    }
+
+    .navbar-link:hover {
+        color: #0070ff;
+        opacity: .8;
+    }
+
+    #search-input .btn,
+    #disqus_click_btn,
+    #disqus-switch-to-direct,
+    #disqus-loadmore-button {
+        background: #727e96;
+        border-color: #727e96;
+        color: #fff;
+    }
+
+    #post-toc a.post-toc-link,
+    #post-toc a.post-toc-link:visited,
+    .share-menu.menu .menu-item>a {
+        color: #727e96;
+    }
+
+    .share-menu.menu .menu-item>a:hover,
+    .share-menu.menu .menu-item>a:focus,
+    .share-menu.menu .menu-item>a:visited {
+        color: #50596c;
+        background: #f8f9fa;
+        opacity: .85;
+    }
+</style><link rel="stylesheet" href="/css/style.min.css">
+
+
+
+
+
+
+
+
+    <!-- Prettify Theme -->
+    
+    <link rel="preload" href="/css/highlight/github.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="/css/highlight/github.min.css"></noscript>
+
+
+
+
+
+<script>
+/*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+!function(t){"use strict";t.loadCSS||(t.loadCSS=function(){});var e=loadCSS.relpreload={};if(e.support=function(){var e;try{e=t.document.createElement("link").relList.supports("preload")}catch(t){e=!1}return function(){return e}}(),e.bindMediaToggle=function(t){var e=t.media||"all";function a(){t.addEventListener?t.removeEventListener("load",a):t.attachEvent&&t.detachEvent("onload",a),t.setAttribute("onload",null),t.media=e}t.addEventListener?t.addEventListener("load",a):t.attachEvent&&t.attachEvent("onload",a),setTimeout(function(){t.rel="stylesheet",t.media="only x"}),setTimeout(a,3e3)},e.poly=function(){if(!e.support())for(var a=t.document.getElementsByTagName("link"),n=0;n<a.length;n++){var o=a[n];"preload"!==o.rel||"style"!==o.getAttribute("as")||o.getAttribute("data-loadcss")||(o.setAttribute("data-loadcss",!0),e.bindMediaToggle(o))}},!e.support()){e.poly();var a=t.setInterval(e.poly,500);t.addEventListener?t.addEventListener("load",function(){e.poly(),t.clearInterval(a)}):t.attachEvent&&t.attachEvent("onload",function(){e.poly(),t.clearInterval(a)})}"undefined"!=typeof exports?exports.loadCSS=loadCSS:t.loadCSS=loadCSS}("undefined"!=typeof global?global:this);
+</script>
+
+    <!-- ### Site Verification ### -->
+    
+
+
+    <meta name="mobile-web-app-capable" content="yes"><meta name="application-name" content="ShinonomeLab"><meta name="msapplication-starturl" content="http://yoursite.com"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="ShinonomeLab"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <!-- ### The Open Graph & Twitter Card Protocol ### -->
+    <meta property="og:title" content="JS数据类型（简单数据类型） | ShinonomeLab"><meta property="og:site_name" content="ShinonomeLab"><meta property="og:type" content="article"><meta property="og:url" content="http://yoursite.com/2019/07/03/JS%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B(%E7%AE%80%E5%8D%95%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B)/"><meta property="og:locale" content="zh-Hans"><meta name="description" content="JS数据类型(简单数据类型)七种数据类型 数字 number 字符串 string 布尔 bool 符号 symbol 空 undefined 空 null 对象 object  总结：四基两空一对象  数字JaveScript中数字都是以64位浮点数形式存储 特殊值正0和负0都等于0一个正数除以0或者正0得到Infinity一个负数除以负0得到-Infinity 无穷大Infinity、+Inf - 一堆热情 - ShinonomeLab"><meta name="keywords" content="js"><meta property="article:published_time" content="2019-07-02T16:00:00.000Z"><meta property="article:modified_time" content="2020-08-13T09:54:16.666Z"><meta property="og:updated_time" content="2020-08-13T09:54:16.666Z"><meta property="article:author" content="一堆热情"><meta property="article:tag" content="js"><meta name="twitter:card" content="summary">
+
+    
+
+    <!-- ### Canonical link ### -->
+    <link rel="canonical" href="http://yoursite.com/2019/07/03/JS%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B(%E7%AE%80%E5%8D%95%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B)/">
+
+    <meta name="generator" content="Hexo 4.2.1">
+
+    <!-- ### Analytics ### -->
+    
+
+
+
+
+
+
+
+    <!-- ### Structured Data ### -->
+    
+
+
+
+<script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "url": "http://yoursite.com/2019/07/03/JS%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B(%E7%AE%80%E5%8D%95%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B)/",
+    "@type": "BlogPosting",
+    "logo": "http://yoursite.com/android-chrome-192x192.png",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "http://yoursite.com/2019/07/03/JS%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B(%E7%AE%80%E5%8D%95%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B)/"
+    },
+    "headline": "JS数据类型（简单数据类型） | ShinonomeLab",
+    
+    "image": {
+        "@type": "ImageObject",
+        "url": "http://yoursite.com/android-chrome-192x192.png"
+    },
+    
+    "datePublished": "2019-07-02T16:00:00.000Z",
+    "dateModified": "2020-08-13T09:54:16.666Z",
+    "author": {
+        "@type": "Person",
+        "name": "一堆热情",
+        "image": {
+            "@type": "ImageObject",
+            "url": "http://yoursite.com/img/avatar.png"
+        },
+        "description": "東雲研究所の今日も平和です"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "ShinonomeLab",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "http://yoursite.com/android-chrome-192x192.png"
+        }
+    },
+    
+    "potentialAction": {
+        "@type": "SearchAction",
+        "target": "http://yoursite.com/search?s={search_term_string}",
+        "query-input": "required name=search_term_string"
+    },
+    
+    "keywords": "js",
+    "description": "JS数据类型(简单数据类型)七种数据类型 数字 number 字符串 string 布尔 bool 符号 symbol 空 undefined 空 null 对象 object  总结：四基两空一对象  数字JaveScript中数字都是以64位浮点数形式存储 特殊值正0和负0都等于0一个正数除以0或者正0得到Infinity一个负数除以负0得到-Infinity 无穷大Infinity、+Inf - 一堆热情 - ShinonomeLab"
+}
+</script>
+
+
+
+    <!-- ### Custom Head ### -->
+    
+</head>
+
+    <body>
+            
+
+            <!-- ### Main content ### -->
+            <!-- ## Header ##-->
+<header>
+    <h1 class="header-title text-center"><a href="/">ShinonomeLab</a></h1>
+
+    <p class="text-center header-slogan">
+        
+            
+                東雲研究所の今日も平和です
+            
+        
+    </p>
+
+    <nav class="navbar-section text-center">
+    
+        <a href="/" class="navbar-link">Home</a>
+    
+    
+        <a href="/archives/" class="navbar-link">Archives</a>
+    
+    
+    
+    
+        <div class="dropdown dropdown-right">
+    <a class="navbar-link dropdown-toggle" tabindex="0">Share</a>
+    <ul class="menu share-menu">
+
+        <!-- Share Weibo -->
+        
+        <li class="menu-item">
+            <a href="http://service.weibo.com/share/share.php?appkey=&title=ShinonomeLab&url=http://yoursite.com&pic=http://yoursite.com/android-chrome-192x192.png&searchPic=false&style=simple" target="_blank" rel="external noopener noreferrer nofollow">Share to Weibo</a>
+        </li>
+        
+
+        <!-- Share Twitter -->
+        
+
+        <!-- Share Facebook -->
+        
+
+        <!-- Share Google+ -->
+        
+        <li class="menu-item">
+            <a href="https://plus.google.com/share?url=http://yoursite.com" target="_blank" rel="external noopener noreferrer nofollow">Share to Google+</a>
+        </li>
+        
+
+        <!-- Share LinkedIn -->
+        
+
+        <!-- Share QQ -->
+        
+        <li class="menu-item">
+            <a href="http://connect.qq.com/widget/shareqq/index.html?site=ShinonomeLab&title=JS数据类型（简单数据类型）&summary=&pics=http://yoursite.com/android-chrome-192x192.png&url=http://yoursite.com" target="_blank" rel="external noopener noreferrer nofollow"> Share to QQ</a>
+        </li>
+        
+
+        <!-- Share Telegram -->
+        
+        <li class="menu-item">
+            <a href="https://t.me/share/url?url=http://yoursite.com&text=JS数据类型（简单数据类型）" target="_blank" rel="external noopener noreferrer nofollow">Share to Telegram</a>
+        </li>
+        
+
+        <!-- QRCode -->
+        
+
+    </ul>
+</div>
+    
+    
+</nav>
+</header>
+
+            
+    <!-- ## Post ## -->
+    <div class="post-container">
+    <div id="post-card" class="card">
+        
+        <div class="card-item-container">
+            <div class="card-inner-cell">
+                <!-- # Post Header Info # -->
+                <div class="card-header">
+                    
+    <h1 class="card-title h3 mb-2">JS数据类型（简单数据类型）</h1>
+
+
+
+
+<div class="post-header-info">
+    <p class="post-header-info-left text-gray">
+        <img class="author-thumb lazyload" data-src="/img/avatar.png" src="/img/suka-lazyload.gif" alt="一堆热情's Avatar">
+        <span>2019-07-03</span>
+        
+        
+        
+    </p>
+    <div class="post-header-info-right">
+        
+            <div class="dropdown dropdown-right">
+<a class="dropdown-toggle" tabindex="0">Share the post</a>
+<ul class="menu share-menu">
+    <!-- Share Weibo -->
+    
+    <li class="menu-item">
+        <a href="http://service.weibo.com/share/share.php?appkey=&title=JS数据类型（简单数据类型）&url=http://yoursite.com/2019/07/03/JS%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B(%E7%AE%80%E5%8D%95%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B)/&pic=http://yoursite.com/android-chrome-192x192.png&searchPic=false&style=simple" target="_blank" rel="external noopener noreferrer nofollow">Share to Weibo</a>
+    </li>
+    
+
+    <!-- Share Twitter -->
+    
+
+    <!-- Share Facebook -->
+    
+
+    <!-- Share Google+ -->
+    
+    <li class="menu-item">
+        <a href="https://plus.google.com/share?url=http://yoursite.com/2019/07/03/JS%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B(%E7%AE%80%E5%8D%95%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B)/" target="_blank" rel="external noopener noreferrer nofollow">Share to Google+</a>
+    </li>
+    
+
+    <!-- Share LinkedIn -->
+    
+
+    <!-- Share QQ -->
+    
+    <li class="menu-item">
+        <a href="http://connect.qq.com/widget/shareqq/index.html?site=ShinonomeLab&title=ShinonomeLab&summary=&pics=http://yoursite.com/android-chrome-192x192.png&url=http://yoursite.com/2019/07/03/JS%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B(%E7%AE%80%E5%8D%95%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B)/" target="_blank" rel="external noopener noreferrer nofollow"> Share to QQ</a>
+    </li>
+    
+
+    <!-- Share Telegram -->
+    
+    <li class="menu-item">
+        <a href="https://t.me/share/url?url=http://yoursite.com/2019/07/03/JS%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B(%E7%AE%80%E5%8D%95%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B)/&text=ShinonomeLab" target="_blank" rel="external noopener noreferrer nofollow">Share to Telegram</a>
+    </li>
+    
+
+    <!-- QRCode -->
+    
+
+</ul>
+</div>
+        
+    </div>
+</div>
+                </div>
+                <div class="card-body">
+                    
+                        
+                        
+                            <div id="post-toc"><ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#JS数据类型-简单数据类型"><span class="post-toc-number">1.</span> <span class="post-toc-text">JS数据类型(简单数据类型)</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#七种数据类型"><span class="post-toc-number">2.</span> <span class="post-toc-text">七种数据类型</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#数字"><span class="post-toc-number">3.</span> <span class="post-toc-text">数字</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#特殊值"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">特殊值</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#正0和负0"><span class="post-toc-number">3.1.1.</span> <span class="post-toc-text">正0和负0</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#无穷大"><span class="post-toc-number">3.1.2.</span> <span class="post-toc-text">无穷大</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#无法表示的数字"><span class="post-toc-number">3.1.3.</span> <span class="post-toc-text">无法表示的数字</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#字符串-string"><span class="post-toc-number">4.</span> <span class="post-toc-text">字符串 string</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#写法"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">写法</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#单引号"><span class="post-toc-number">4.1.1.</span> <span class="post-toc-text">单引号</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#双引号"><span class="post-toc-number">4.1.2.</span> <span class="post-toc-text">双引号</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#反引号"><span class="post-toc-number">4.1.3.</span> <span class="post-toc-text">反引号</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#注意"><span class="post-toc-number">4.1.4.</span> <span class="post-toc-text">注意</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#转义"><span class="post-toc-number">4.2.</span> <span class="post-toc-text">转义</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#错误写法"><span class="post-toc-number">4.2.1.</span> <span class="post-toc-text">错误写法</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#正确写法"><span class="post-toc-number">4.2.2.</span> <span class="post-toc-text">正确写法&#96;&#96;</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#常用转义字符"><span class="post-toc-number">4.2.3.</span> <span class="post-toc-text">常用转义字符</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#字符串的属性"><span class="post-toc-number">4.3.</span> <span class="post-toc-text">字符串的属性</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#字符串的长度"><span class="post-toc-number">4.3.1.</span> <span class="post-toc-text">字符串的长度</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#string-length"><span class="post-toc-number">4.3.1.1.</span> <span class="post-toc-text">string.length</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#通过下标读取字符"><span class="post-toc-number">4.3.2.</span> <span class="post-toc-text">通过下标读取字符</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#string-index"><span class="post-toc-number">4.3.2.1.</span> <span class="post-toc-text">string[index]</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#注意index从0开始"><span class="post-toc-number">4.3.2.2.</span> <span class="post-toc-text">注意index从0开始</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#注意index到length"><span class="post-toc-number">4.3.2.3.</span> <span class="post-toc-text">注意index到length</span></a></li></ol></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#布尔-boolean"><span class="post-toc-number">5.</span> <span class="post-toc-text">布尔 boolean</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#只有两个值"><span class="post-toc-number">5.1.</span> <span class="post-toc-text">只有两个值</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#五个falsy值-⭐⭐⭐"><span class="post-toc-number">5.2.</span> <span class="post-toc-text">五个falsy值 ⭐⭐⭐</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#undefined-和-null-两种空类型"><span class="post-toc-number">6.</span> <span class="post-toc-text">undefined 和 null 两种空类型</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#为什么有两个空"><span class="post-toc-number">6.1.</span> <span class="post-toc-text">为什么有两个空</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#区别"><span class="post-toc-number">6.2.</span> <span class="post-toc-text">区别</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#symbol"><span class="post-toc-number">7.</span> <span class="post-toc-text">symbol</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#变量声明"><span class="post-toc-number">8.</span> <span class="post-toc-text">变量声明</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#三种声明方式"><span class="post-toc-number">8.1.</span> <span class="post-toc-text">三种声明方式</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#区别-1"><span class="post-toc-number">8.2.</span> <span class="post-toc-text">区别</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#var-声明"><span class="post-toc-number">8.3.</span> <span class="post-toc-text">var 声明</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#let-声明"><span class="post-toc-number">8.4.</span> <span class="post-toc-text">let 声明</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#const声明"><span class="post-toc-number">8.5.</span> <span class="post-toc-text">const声明</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#变量声明-1"><span class="post-toc-number">8.6.</span> <span class="post-toc-text">变量声明</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#指定值"><span class="post-toc-number">8.6.1.</span> <span class="post-toc-text">指定值</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#同时也指定了类型"><span class="post-toc-number">8.6.2.</span> <span class="post-toc-text">同时也指定了类型</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#但是值和类型都可以随意变化"><span class="post-toc-number">8.6.3.</span> <span class="post-toc-text">但是值和类型都可以随意变化</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#name-和-‘name’-的区别"><span class="post-toc-number">8.7.</span> <span class="post-toc-text">name 和 ‘name’ 的区别</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#name-是变量"><span class="post-toc-number">8.7.1.</span> <span class="post-toc-text">name 是变量</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#‘name’-是字符串常量"><span class="post-toc-number">8.7.2.</span> <span class="post-toc-text">‘name’ 是字符串常量</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#类型转换"><span class="post-toc-number">8.8.</span> <span class="post-toc-text">类型转换</span></a></li></ol></li></ol></div>
+                        
+                    
+                    <article id="post-content">
+                        <h1 id="JS数据类型-简单数据类型"><a href="#JS数据类型-简单数据类型" class="headerlink" title="JS数据类型(简单数据类型)"></a>JS数据类型(简单数据类型)</h1><h1 id="七种数据类型"><a href="#七种数据类型" class="headerlink" title="七种数据类型"></a>七种数据类型</h1><ol>
+<li>数字 number</li>
+<li>字符串 string</li>
+<li>布尔 bool</li>
+<li>符号 symbol</li>
+<li>空 undefined</li>
+<li>空 null</li>
+<li>对象 object</li>
+</ol>
+<p>总结：四基两空一对象</p>
+<hr>
+<h1 id="数字"><a href="#数字" class="headerlink" title="数字"></a>数字</h1><p>JaveScript中数字都是以64位浮点数形式存储</p>
+<h2 id="特殊值"><a href="#特殊值" class="headerlink" title="特殊值"></a>特殊值</h2><h3 id="正0和负0"><a href="#正0和负0" class="headerlink" title="正0和负0"></a>正0和负0</h3><p>都等于0<br>一个正数除以0或者正0得到Infinity<br>一个负数除以负0得到-Infinity</p>
+<h3 id="无穷大"><a href="#无穷大" class="headerlink" title="无穷大"></a>无穷大</h3><p>Infinity、+Infinity、-Infinity</p>
+<h3 id="无法表示的数字"><a href="#无法表示的数字" class="headerlink" title="无法表示的数字"></a>无法表示的数字</h3><p>NaN (Not a Number)<br>但它是一个数字</p>
+<hr>
+<h1 id="字符串-string"><a href="#字符串-string" class="headerlink" title="字符串 string"></a>字符串 string</h1><p>每个字符两个字节</p>
+<h2 id="写法"><a href="#写法" class="headerlink" title="写法"></a>写法</h2><h3 id="单引号"><a href="#单引号" class="headerlink" title="单引号"></a>单引号</h3><p><code>&#39;你好&#39;</code></p>
+<h3 id="双引号"><a href="#双引号" class="headerlink" title="双引号"></a>双引号</h3><p><code>&quot;你好&quot;</code></p>
+<h3 id="反引号"><a href="#反引号" class="headerlink" title="反引号"></a>反引号</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">`</span></span><br><span class="line"><span class="string">	你</span></span><br><span class="line"><span class="string">	好</span></span><br><span class="line"><span class="string">`</span></span><br></pre></td></tr></table></figure>
+<p>反引号可以定义多行字符串，或者再字符串中嵌入变量</p>
+<h3 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h3><p>引号不属于字符串的一部分，如果要在单引号里面包含单引号怎么办<br>答案是转义</p>
+<h2 id="转义"><a href="#转义" class="headerlink" title="转义"></a>转义</h2><h3 id="错误写法"><a href="#错误写法" class="headerlink" title="错误写法"></a>错误写法</h3><p><code>&#39;it&#39;s ok&#39;</code><br>JS引擎会认为 <code>&#39;it&#39;</code>  就结束了，后面无法解析</p>
+<h3 id="正确写法"><a href="#正确写法" class="headerlink" title="正确写法``"></a>正确写法``</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'it\' ok'</span>  这就是转义 </span><br><span class="line">“it<span class="string">'s ok”</span></span><br><span class="line"><span class="string">`it'</span>s ok<span class="string">`</span></span><br></pre></td></tr></table></figure>
+<h3 id="常用转义字符"><a href="#常用转义字符" class="headerlink" title="常用转义字符"></a>常用转义字符</h3><p>&#39;  表示 ‘<br>&#39;‘ 表示 ‘’<br>\n 表示换行<br>\r  表示回车<br>\t  表示tab制表符<br>\ 表示 \</p>
+<h2 id="字符串的属性"><a href="#字符串的属性" class="headerlink" title="字符串的属性"></a>字符串的属性</h2><p>等等！对象才有属性，为什么字符串也有属性<br>先挖个坑，写完对象再来解答</p>
+<h3 id="字符串的长度"><a href="#字符串的长度" class="headerlink" title="字符串的长度"></a>字符串的长度</h3><h4 id="string-length"><a href="#string-length" class="headerlink" title="string.length"></a>string.length</h4><p>‘123’.length //3<br>‘\n\r\t’.length // 3<br>转义字符算一个长度<br>‘’.length //0<br>‘ ‘.length // 1</p>
+<h3 id="通过下标读取字符"><a href="#通过下标读取字符" class="headerlink" title="通过下标读取字符"></a>通过下标读取字符</h3><h4 id="string-index"><a href="#string-index" class="headerlink" title="string[index]"></a>string[index]</h4><p>let s = ‘hello’</p>
+<p>s[0] // ‘h’</p>
+<h4 id="注意index从0开始"><a href="#注意index从0开始" class="headerlink" title="注意index从0开始"></a>注意index从0开始</h4><p>s[0]是第一个字符</p>
+<h4 id="注意index到length"><a href="#注意index到length" class="headerlink" title="注意index到length"></a>注意index到length</h4><p>let s = ‘hello’<br>s[5] // undefined，不报错？？<br>s[4] // ‘o’</p>
+<hr>
+<h1 id="布尔-boolean"><a href="#布尔-boolean" class="headerlink" title="布尔 boolean"></a>布尔 boolean</h1><p>真或假</p>
+<h2 id="只有两个值"><a href="#只有两个值" class="headerlink" title="只有两个值"></a>只有两个值</h2><p>true 和 false，注意大小写</p>
+<h2 id="五个falsy值-⭐⭐⭐"><a href="#五个falsy值-⭐⭐⭐" class="headerlink" title="五个falsy值 ⭐⭐⭐"></a>五个falsy值 ⭐⭐⭐</h2><p>falsy 就相当于false 但又不是false 的值</p>
+<ol>
+<li>undefined</li>
+<li>null</li>
+<li>0</li>
+<li>NaN</li>
+<li>‘’ (注：空字符串)</li>
+</ol>
+<p>只有这5个值和布尔值false 是false，其他值均为true</p>
+<hr>
+<h1 id="undefined-和-null-两种空类型"><a href="#undefined-和-null-两种空类型" class="headerlink" title="undefined 和 null 两种空类型"></a>undefined 和 null 两种空类型</h1><p>空空如也</p>
+<h2 id="为什么有两个空"><a href="#为什么有两个空" class="headerlink" title="为什么有两个空"></a>为什么有两个空</h2><p>js原创垃圾</p>
+<h2 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h2><p>没有本质区别</p>
+<ol>
+<li>如果一个变量声明了，但没有赋值，那么默认值就是undefined，而不是null（null有种人为的意思）</li>
+<li>如果一个函数，没有写return，那么默认return undefined ，而不是null</li>
+<li>习惯上把非对象的空值写成undefined，把对象的空值写为null</li>
+</ol>
+<hr>
+<h1 id="symbol"><a href="#symbol" class="headerlink" title="symbol"></a>symbol</h1><p>不常用<br><a href="https://zhuanlan.zhihu.com/p/22652486" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/22652486</a></p>
+<hr>
+<h1 id="变量声明"><a href="#变量声明" class="headerlink" title="变量声明"></a>变量声明</h1><h2 id="三种声明方式"><a href="#三种声明方式" class="headerlink" title="三种声明方式"></a>三种声明方式</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">1</span></span><br><span class="line"><span class="keyword">let</span> a = <span class="number">1</span></span><br><span class="line"><span class="keyword">const</span> a = <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<h2 id="区别-1"><a href="#区别-1" class="headerlink" title="区别"></a>区别</h2><p>var 是过时的，不好用的方式<br>let 是新的，更合理的方式<br>const 是声明时必须赋值，且不能再改的方式</p>
+<h2 id="var-声明"><a href="#var-声明" class="headerlink" title="var 声明"></a>var 声明</h2><p>0202了，基本不用，挖个坑，回来再讲</p>
+<h2 id="let-声明"><a href="#let-声明" class="headerlink" title="let 声明"></a>let 声明</h2><p>规则<br>遵循块作用域，即使用范围不能超出{}<br>不能重复声明<br>可以赋值，也可以不赋值<br>必须先声明再使用<br>全局声明let变量，不会变成window的属性<br>for循环配合let有奇效</p>
+<h2 id="const声明"><a href="#const声明" class="headerlink" title="const声明"></a>const声明</h2><p>跟let几乎一摸一样<br>声明时要赋值，且不能改</p>
+<h2 id="变量声明-1"><a href="#变量声明-1" class="headerlink" title="变量声明"></a>变量声明</h2><h3 id="指定值"><a href="#指定值" class="headerlink" title="指定值"></a>指定值</h3><p>let a = 1  //a为1</p>
+<h3 id="同时也指定了类型"><a href="#同时也指定了类型" class="headerlink" title="同时也指定了类型"></a>同时也指定了类型</h3><p>let a = 1  //number类型</p>
+<h3 id="但是值和类型都可以随意变化"><a href="#但是值和类型都可以随意变化" class="headerlink" title="但是值和类型都可以随意变化"></a>但是值和类型都可以随意变化</h3><p>a = 2<br>a = ‘字符串’</p>
+<h2 id="name-和-‘name’-的区别"><a href="#name-和-‘name’-的区别" class="headerlink" title="name 和 ‘name’ 的区别"></a>name 和 ‘name’ 的区别</h2><h3 id="name-是变量"><a href="#name-是变量" class="headerlink" title="name 是变量"></a>name 是变量</h3><p>值可变，可能是’name’，也可能是’hello’</p>
+<h3 id="‘name’-是字符串常量"><a href="#‘name’-是字符串常量" class="headerlink" title="‘name’ 是字符串常量"></a>‘name’ 是字符串常量</h3><p>常量就是不变量<br>‘name’ 只能是’name’ ，不能是其他值</p>
+<hr>
+<h2 id="类型转换"><a href="#类型转换" class="headerlink" title="类型转换"></a>类型转换</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//number =&gt; string</span></span><br><span class="line"><span class="built_in">String</span>(n)</span><br><span class="line">n + <span class="string">''</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//string =&gt; number</span></span><br><span class="line"><span class="built_in">Number</span>(s)</span><br><span class="line"><span class="built_in">parseInt</span>(s)</span><br><span class="line"><span class="built_in">parseFloat</span>(s)</span><br><span class="line">s - <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//x =&gt; bool</span></span><br><span class="line"><span class="built_in">Boolean</span>(x)</span><br><span class="line">!!x</span><br><span class="line"></span><br><span class="line">x =&gt; string</span><br><span class="line"><span class="built_in">String</span>(x)</span><br><span class="line">x.toString()</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    </article>
+                    
+
+
+    <blockquote id="date-expire-notification" class="post-expired-notify">This article was last updated on <span id="date-expire-num"></span> days ago, and the information described in the article may have changed.</blockquote>
+    <script>
+    (function() {
+        var dateUpdate = Date.parse("2020-08-13");
+        var nowDate = new Date();
+        var a = nowDate.getTime();
+        var b = a - dateUpdate;
+        var daysUpdateExpire = Math.floor(b/(24*3600*1000));
+        if (daysUpdateExpire >= 120) {
+            document.getElementById('date-expire-num').innerHTML = daysUpdateExpire;
+        } else {
+            document.getElementById('date-expire-notification').style.display = 'none';
+        }
+    })();
+    </script>
+
+
+<p class="post-footer-info mb-0 pt-0">Published at&nbsp;<time datetime="2019-07-02T16:00:00.000Z" itemprop="datePublished">2019-07-03</time>
+
+    , Updated at&nbsp;<time datetime="2020-08-13T09:54:16.666Z" itemprop="dateModified">2020-08-13</time>
+
+</p>
+<p class="post-footer-info mb-0 pt-2">
+
+
+
+<span class="post-tags-list mt-2">
+
+<a class="post-tags-list-item" href="/tags/js/" rel="tag">#&nbsp;js</a>
+
+</span>
+
+
+</p>
+
+                </div>
+                <div class="post-nav px-2 bg-gray">
+<ul class="pagination">
+    <!-- Prev Nav -->
+    
+        <li class="page-item page-prev">
+            <a href="/2019/07/08/JS%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/" rel="prev">
+                <div class="page-item-title"><i class="icon icon-back" aria-hidden="true"></i></div>
+                <div class="page-item-subtitle">JS基础语法</div>
+            </a>
+        </li>
+    
+
+    <!-- Next Nav -->
+    
+        <li class="page-item page-next">
+            <a href="/2019/06/22/CSS%E5%8A%A8%E7%94%BB%E4%B8%8E%E6%B5%8F%E8%A7%88%E5%99%A8%E6%B8%B2%E6%9F%93%E5%8E%9F%E7%90%86/" rel="next">
+                <div class="page-item-title"><i class="icon icon-forward" aria-hidden="true"></i></div>
+                <div class="page-item-subtitle">CSS动画与浏览器渲染原理</div>
+            </a>
+        </li>
+    
+</ul>
+</div>
+
+                
+                    <!-- # Comment # -->
+                    
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+            <!-- ### Footer ### -->
+            <footer class="text-center">
+    <!-- footer copyright -->
+    
+        <p class="footer-copyright mb-0">Copyright&nbsp;©&nbsp;<span id="copyright-year"></span>
+            <a class="footer-copyright-a" href="http://yoursite.com">ShinonomeLab</a>
+        </p>
+
+    <!-- footer custom text -->
+    <p class="footer-text mb-0">
+    
+    </p>
+    <!-- footer develop info -->
+    <p class="footer-develop mb-0">
+        
+
+        
+        Powered by&nbsp;<!--
+         --><a href="https://hexo.io" target="_blank" class="footer-develop-a" rel="external nofollow noopener noreferrer">Hexo</a><span class="footer-develop-divider"></span>Theme&nbsp;-&nbsp;<!--
+         --><a href="https://github.com/SukkaW/hexo-theme-suka" target="_blank" class="footer-develop-a" rel="external noopener">Suka</a>
+    </p>
+</footer>
+
+
+        <!-- ### Import File ### -->
+        <!-- ### Footer JS Import ### -->
+
+<script>
+
+    
+window.lazyLoadOptions = {
+    elements_selector: ".lazyload",
+    threshold: 50
+};
+
+(function() {
+    var copyrightNow = new Date().getFullYear();
+    var copyrightContent = document.getElementById('copyright-year');
+    var copyrightSince = 2019;
+    if (copyrightSince === copyrightNow) {
+        copyrightContent.textContent = copyrightNow;
+    } else {
+        copyrightContent.textContent = copyrightSince + ' - ' + copyrightNow;
+    }
+})();
+console.log('\n %c Suka Theme (hexo-theme-suka) | © SukkaW | Verision 1.3.3 %c https://github.com/SukkaW/hexo-theme-suka \n', 'color: #fff; background: #444; padding:5px 0;', 'background: #bbb; padding:5px 0;');
+
+</script>
+
+<script src="/lib/vanilla-lazyload/lazyload.min.js" async></script>
+
+
+
+<!-- Comment -->
+
+
+<!-- ### Custom Footer ### -->
+
+    </body>
+
+</html>
